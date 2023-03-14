@@ -1,0 +1,49 @@
+## 높은 응집도, 낮은 결합도(high coherence, low coupling)
+* 고전적 소프트웨어 원리
+* 개방 폐쇄 원칙(OCP)과도 상통, 설명 가능
+* 클래스, 패키지, 컴포넌트, 모듈에 이르기까지 동일한 원리로 적용 가능
+
+### 높은 응집도
+응집도가 높을 수록 변화가 일어날 때 해당 모듈에서 변하는 부분이 크다. 응집도가 낮다면 변화가 생겼을 시 해당 모듈에서 어떤 부분을 바꿔야 할지 알기 어렵고, 일일이 따져봐야할지 모르며, 변화의 영향 또한 모듈 밖의 어디까지 미칠지 또한 알기 어렵다.
+
+### 낮은 결합도
+'느슨한 연결'이라고 표현하기도 한다. 관계 유지에 필요한 꼭 필요한 정보만 간접적으로 제공하고, 다른 객체 또는 모듈과 서로 독립적이고 알 필요도 없게 만드는 것을 일컫는다. 결합도가 낮을 수록 변화 대응 속도가 빨라지고, 구성이 깔끔해지며, 확장이 편리해진다.
+
+<br></br>
+## 전략 패턴(strategy pattern)
+1. 상황: '클라이언트client'가 사용할 '맥락context'이 있다.
+2. 맥락context으로부터 독립적인 책임으로 분리 가능한 '기능strategy'을 분리시킨다.
+3. 분리시킨 기능strategy은 대체 가능하다(이런 기능strategy을 바꿔가면서 사용할 수 있게 하였기에 '전략 패턴'이라고 부른다).
+4. 일반적으로, 맥락context을 사용하는 클라이언트client는 맥락context이 사용할 기능strategy을 맥락context의 생성자 등을 통해 제공해준다.
+```java
+class ContextClass {
+  // 2. 기능strategy를 분리
+  private StrategyInterface strategyInterfaceObject;
+  
+  public ContextClass(StrategyInterface strategyInterfaceObject) {
+    this.strategyInterfaceObject = strategyInterfaceObject;
+  }
+  
+  // 1. 맥락context만의 고유 동작/알고리즘
+  // ...
+}
+```
+
+```java
+class ClientClass {
+   // 3. 클라이언트client가 필요한 구체 기능strategy 직접 선택. 기능strategy을 바꿀 시 본 코드의 구현체 부분만 교체하면 된다.
+   StrategyInterface strategyInterfaceObject = new StrategyInterfaceImplementatioinClass();
+   
+   // 4. 맥락context의 생성자에게 해당 기능strategy을 인터페이스 형태로 제공한다.
+   ContextClass contextClassObject = new ContextClass(strategyInterfaceObject);
+   
+   // ...
+}
+```
+
+
+
+<br></br>
+<br></br>
+## reference
+* 이일민. *토비의 스프링*. 에이콘. 2012.
