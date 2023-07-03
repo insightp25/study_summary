@@ -287,25 +287,120 @@ GOF에서는 데코레이터 패턴에서 구현의 대상이 되는 인터페�
 
 ## 리플렉션
 
+핵심: **'메타 데이터'**
+
 동적으로 만들어 낸다는 건 결국 수동으로 프록시 클래스를 계속 안만들어도 된다는 것
 - Java 기본 제공 JDK 동적 프록시 기술
 - 오픈소스 기반 프록시 기술 - CGLIB 등
 
 자바 리플렉션 기술 이해 -> JDK 동적 프록시 이해
 
-- 리플렉션: 클래스, 메서드의 메타정보 동적 획득, 동적 호출
+- 리플렉션: 클래스, 메서드의 메타정보 동적 획득, 코드 동적 호출.
+    - 클래스나 메서드 메타정보를 사용해 </u>**동적으로 호출하는 메서드를 변경할 수 있다**</u>(변하는 로직과 변하지 않는 로직 중 변하는 로직만 별도로 뽑아내 그때 그때 다르게 호출할 수 있다).
+
+하지만 리플렉션 기술은 런타임에 동작, 컴파일 시점에 오류 잡을 수 없어
+
+리플렉션은 type-safe 등으로 컴파일 오류 잡아주는 방식에 역행하는 방식
+
+일반적으로 사용하면 안되고, 프레임워크 개발 혹은 매우 일반적인 공통 처리가 필요할 때 부분적으로 주의해서 사용
+
+
+## JDK 동적 프록시
+
+JDK 동적 프록시는 인터페이스 활용해서만 가능. 상속 활용 못함.
+
+동적 프록시: 프록시의 로직은 같은데, 적용 대상만 차이가 있는 문제 해결
+
+- 프록시 객체를 동적으로 런타임에 대신 만들어 준다
+- 동적 프록시에 원하는 실행 로직을 지정할 수 있다
+
+JDK 동적 프록시가 제공하는 InvocationHandler
+- Object proxy 프록시 자신
+- Method method 호출한 메서드
+- Object[] args 메서드 호출시 전달한 인수
+
+
+동적 프록시를 사용하면 결국 handler 하나 만들고, config에서 설정 해주는 것으로 모든 작업이 끝난다.
+
+### 적용1
+proxy를 부르면 지정한 클래스의 모든 메서드에 대해 invoke가 된다. eg. 로그를 출력하지 말아야 하는 메서드도 똑같이 invoke 되는 문제가 남음. -> 특정 조건에서만 로그 남기는 기능 별도 개발
+
+### 적용2
+PatternMatchUtils.simpleMatch(...)
+
+
+## CGLIB(Code Generator Library)
+
+인터페이스 없어도 구현체 클래스만으로 동적 프록시 만들어낼 수 있다
+외부 라이브러리 -> 스프링 프레임워크 편입
+
+MethodInterceptor 사용
+
+하지만 CGLIB 사용하는 경우 거의 없다. `ProxyFactory`가 있어서.
+
+상속에 따른 제약
+- 부모 클래스 생성자 체크
+- 클래스에 final 키워드 붙을 시 상속 불가
+- 메서드에 final 키워드 붙을 시 오버라이딩 불가
+
+
+### 남은 문제
+
+- 인터페이스 경우 -> JDK 동적 프록시 with `InvocationHandler`
+- 그 외 경우 -> CGLIB with `MethodInterceptor`
+- 둘을 중복으로 각각 만들어 관리해야 할까?
+- 특정 조건(no log 등)에 맞는 기술을 적용하도록 공통으로 제공할 수 있는 방법이 없을까?
 
 
 
+## Proxy Factory
+
+이전에는 상황에 따라 JDK 동적 프록시, CGLIB 사용 여부를 직접 선택 -> 프록시 팩토리 하나로 편리하게 동적 프록시 생성
 
 
+프록시 팩토리가 `InvocationHandler`와 `MethodInterceptor` 둘 중 적절하게 선택하여 프록시를 생성하고, 해당 프록시의 `InvocationHandler`/`MethodInterceptor`는 내부에서 `Advice`를 호출.
 
+- `Advice`: `InvocationHandler`/`MethodInterceptor`를 개념적으로 추상화. 프록시가 제공하는 부가기능 이란 뜻이라 해석할 수 있음.
 
+- 프록시 팩토리 사용시 둘 대신 `Advice` 사용하면 된다
+---
+```Java
+public interface MethodInterceptor extends Interceptor {
+    Object invoke(MethodInvocation invocation) throws Throwable;
+}
+```
 
+- `MethodInvocation`: 다음 모두 포함
+    - 다음 메서드 호출 방법
+    - 현재 프록시 객체 인스턴스
+    - `args`
+    - 메서드 정보
 
+(기존 `InvocationHandler`/`MethodInterceptor`의 인수들이 모두 이 안으로 들어갔다고 생각하면 된다)
 
+`MethodInterceptor`는 CGLIB의 그것과 이름이 동일하니 패키지 이름에 주의.
 
+MethodInterceptor -> Interceptor -> Advice
 
+org.aopalliance.intercept 패키지는 AOP 모듈(spring-top)안에 있다.
+
+`invocation.proceed()`(부가기능 구현할 때): `target` 클래스 호출하고 그 결과를 받음
+
+`target` 정보는 이미 `MethodInvocation` 안에 모두 들어가 있음
+
+`new ProxyFactory(targe)` 프록시 팩토리 생성할 때 이미 정보를 넣음 -> 
+
+`AopUtils.isAopProxy()` 프록시 팩토리 사용해 생성된 객체에 true 표시
+
+`proxyFactory.setProxyTargetClass(true);` ProxyTargetClass 옵션을 사용하면 인터페이스가 있어도 강제로 CGLIB을 사용하고, 클래스 기반 프록시 사용. 중요. 실무에서도 사용함.
+
+### 정리
+- 프록시 팩토리 서비스 추상화 덕분에 구체적 CGLIB, JDK 동적 프록시 기술에 의존 없이 편리하게 동적 프록시 생성 가능
+- 프록시의 부가 기능 로직도 특정 기술에 종속적이지 않게 `Advice` 하나로 편리하게 사용할 수 있다.
+
+JDK 동적 프록시 경우  `InvocationHandler`가 `Advice` 호출, CGLIB의 경우 `MethodInterceptor`가 `Advice` 호출.
+
+스프링 부트는 AOP 적용시 기본적으로 `ProxyTargetClass=true`로 설정해서 사용. 인터페이스 있어도 항상 CGLIB 사용해 구체 클래스 기반 프록시 생성.
 
 
 
