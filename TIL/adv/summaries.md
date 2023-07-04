@@ -547,6 +547,23 @@ pointcut.setExpression("execution(* hello.proxy.app..*(..)) && !execution(* hell
 표현식 예
 
 
+---
+## @Aspect 프록시
+
+`@Aspect`: 프록시를 만들어주는 스프링의 편의 기능. 실무에선 대부분 이 방식을 사용한다.
+
+`ProceedingJoinPoint`: 어드바이스의 `MethodInvocation invocation`과 유사한 기능. 내부에
+- 실제 호출 대상
+- 전달 인자
+- 호출된 객체 및 메서드 정보
+
+`joinPoint.proceed()`: 실제 호출 대상(target)을 호출한다.
+
+횡단 관심사~~cross-cutting concerns~~ -> 스프링 AOP가 전문으로 해결
+
+
+
+
 
 
 
