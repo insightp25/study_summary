@@ -132,7 +132,11 @@ service layer에서
 
 ---
 
-## 트랜잭션 문제 해결 - 트랜잭션 AOP 이해
+## 트랜잭션 문제 해결 - 트랜잭션 AOP 적용
+
+스프링 (트랜잭션)AOP 적용은 스프링이 제공하는 빈 등이 적용되는 것에 한해 가능(Service 등이 빈으로 등록돼있어야).
+
+원칙적으로는 `@Transactional` 사용시에도 `DataSource`와 `DataSourceTransactionManager`가 빈으로 등록되어야 하나, 스프링부트 사용시 `application.properties`를 통해 자동으로 등록 및 설정을 해준다.
 
 
 
