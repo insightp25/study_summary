@@ -276,12 +276,12 @@ void findApplicationBeanDefinition() {
 * 추가 정보
     * 스프링 빈 등록시 크게 애노테이션 기반 자바 코드 설정, XML 기반 설정은 크게 2가지 방법:
         1. 직접 스프링 빈을 등록하는 방법 - XML 기반 방식
-        ```
-        Generic bean: class [org.springframework.data.redis.core.StringRedisTemplate]; ... factoryBeanName=null; factoryMethodName=null;
-        ```
+            ```
+            Generic bean: class [org.springframework.data.redis.core.StringRedisTemplate]; ... factoryBeanName=null; factoryMethodName=null;
+            ```
         2. 팩토리 메서드를 쓰는 방법(약간 우회하는 방법이라 볼 수 있다) - 애노테이션 기반 자바 코드
-        ```
-        Root bean: class [null]; ... factoryBeanName=redisConfig; factoryMethodName=stringFanOutRedisTemplate;
-        ```
+            ```
+            Root bean: class [null]; ... factoryBeanName=redisConfig; factoryMethodName=stringFanOutRedisTemplate;
+            ```
     
-        이 있다고 볼 수 있는데, BeanDefinition 조회시 결과 정보가 약간 다른 부분이 존재하는 이유는 위의 방법 차이에 기인한다.
+        이 있다고 볼 수 있는데, BeanDefinition 조회시 위와 같이 결과 정보가 약간 다른 이유는 위의 방법 차이에 기인한다.
