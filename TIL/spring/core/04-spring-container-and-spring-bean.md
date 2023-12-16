@@ -226,7 +226,7 @@ void findAllBeanByType() {
 * BeanDefinition 관련 메서드 중 일부는 ApplicationContext 인터페이스가 아닌 다른 인터페이스가 구현하므로, 참조 변수 타입이 ApplicationContext일 시 일부 BeanDefinition 관련 메서드를 사용할 수 없다. 참조 변수 타입이 AnnotationConfigApplicationContext, GenericXmlApplicationContext 등과 같이 구현 객체 타입일 시, 구현 객체는 모든 인터페이스를 상속하므로 BeanDefinition 관련 모든 메서드 또한 사용 가능하다.
     ```java
     // 참조 변수 타입: ApplicationContext(인터페이스)
-    ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
+    ApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
 
     // getBeanDefinitionNames() 사용 가능
     String[] beanDefinitionNames = ac.getBeanDefinitionNames();
@@ -237,11 +237,12 @@ void findAllBeanByType() {
     
     ```java
     // 참조 변수 타입: AnnotationConfigApplicationContext(구현 객체)
-    AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
+    AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
 
     // getBeanDefinitionNames() 사용 가능
     String[] beanDefinitionNames = ac.getBeanDefinitionNames(); 
-     // getBeanDefinition() 사용 불가
+
+     // getBeanDefinition() 사용 가능
     BeanDefinition beanDefinition = ac.getBeanDefinition(beanDefinitionNames[0]);
     ```
 
