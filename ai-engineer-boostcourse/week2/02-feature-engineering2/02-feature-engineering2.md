@@ -66,7 +66,7 @@
 
 # 3. permutation 피처 중요도
 
-### model-specific method
+### model-agnostic method
 
 ## 3.1. permutation 피처 중요도란?
 
