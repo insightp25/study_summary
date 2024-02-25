@@ -191,8 +191,32 @@ public class Node {
 
 ## BST 탐색 코드
 ```java
+public class Node {
+  private final int data;
+  private Node left;
+  private Node right;
+
+  public Node(final int data) {
+    this.data = data;
+  }
+
+  public int getData() {
+    return this.data;
+  }
+
+  public Node getLeft() {
+    return this.left;
+  }
+
+    public Node getRight() {
+    return this.right;
+  }
+}
+```
+
+```java
 public static Node getNodeOrNull(Node node, int data) {
-    if (node == null) {
+  if (node == null) {
     return null;
   }
 
@@ -214,6 +238,18 @@ public static Node getNodeOrNull(Node node, int data) {
 
 
 
+<br>
+
+# BST 삽입
+
+## BST 삽입 정리
+
+1. 새로운 노드를 받아줄 수 있는 부모 노드를 찾음 -> O(logN)
+  - 트리를 내려가는 방법은 탐색과 같음
+  - 새로운 노드를 받아줄 수 있는 부모란?
+    - 오른쪽 하위 트리로 내려가야 하는데 오른쪽 자식이 없는 부모
+    - 왼쪽 하위 트리로 내려가야 하는데 왼쪽 자식이 없는 부모
+2. 그 후, 거기에 자식으로 추가 -> O(1)
 
 
 
@@ -221,6 +257,67 @@ public static Node getNodeOrNull(Node node, int data) {
 
 
 
+<br>
+
+# BST 삽입의 시간 복잡도
+
+O(logN) + O(1)
+
+## BST 삽입은 실제 나무와 비슷
+
+- 이미 자라있는 부분(나뭇가지, 몸통 등)을 유지
+  - 기존 노드 위치를 하나도 바꾸지 않음
+- 새로운 가지를 뻗어나갈 뿐
+  - 새로 추가되는 값은 언제나 리프 노드!
+
+
+
+
+
+
+<br>
+
+# 코드보기: BST 삽입
+
+```java
+public class Node {
+  private final int data;
+  private Node left;
+  private Node right;
+
+  public Node(final int data) {
+    this.data = data;
+  }
+
+  public int getData() {
+    return this.data;
+  }
+
+  public Node getLeft() {
+    return this.left;
+  }
+
+    public Node getRight() {
+    return this.right;
+  }
+}
+```
+
+```java
+public static Node insertRecursive(final Node node, int data) {
+  if (node == null) {
+    return new Node(data);
+  }
+
+  if (data < node.data) {
+    node.left = insertRecursive(node.left, data);
+  } else {
+    node.right = insertRecursive(node.right, data);
+  }
+
+  return node;
+}
+```
 
 
 
@@ -231,8 +328,64 @@ public static Node getNodeOrNull(Node node, int data) {
 
 <br>
 
+# BST 삭제
+
+## 곧바로 자식을 연결하면 안 되는 이유
+
+- BST는 정렬된 배열과 개념상 같다고 했음
+  - 중위 순회를 하면 정렬된 배열이 나옴
+- 따라서 노드를 삭제한 뒤에도 올바른 BST를 유지하려면?
+  - 정렬된 배열에서 값을 하나 삭제하듯이 처리
+- 힌트: 트리에서 뭔가를 지울 때 언.제.나. 리프를 지움
+  - 실세계에서 나무를 정리할 때도 가지부터 치는 것과 마찬가지 원리
 
 
+## BST 삭제
+
+오른쪽 하위 트리에서 최솟값(제일 왼쪽 리프, in-order successor)
+
+왼쪽 하위 트리에서 최댓값(제일 오른쪽 리프, in-order predecessor)
+
+
+## BST 노드 삭제 전략
+
+1. 지울 값을 가지고 있는 노드 탐색 
+2. 그 바로 전 값을 가진 노드를 찾음(1~2 -> O(logN))
+  - 왼쪽 하위 트리의 제일 오른쪽 리프
+3. 두 값을 교환 -> O(1)
+4. 리프 노드를 삭제 -> O(1)
+
+
+
+
+
+
+<br>
+
+# 트리 순회(tree traversal)
+
+- 대표적인 3가지 트리 순회법
+  - 전위(pre-order) 순회
+  - 중위(in-order) 순회
+  - 후위(post-order) 순회
+- 하위 트리와 비교했을 때 현재 노드의 방문 순서
+  - 중위: 왼쪽 하위 트리 -> 현재 노드 -> 오른쪽 하위 트리
+  - 전위: 현재 노드 -> 왼쪽 하위 트리 -> 오른쪽 하위 트리
+  - 후위: 왼쪽 하위 트리 -> 오른쪽 하위 트리 -> 현재 노드
+
+## 중위 순회 코드
+
+```java
+public static void traverseInOrder(Node node) {
+  if (node == null) {
+    return;
+  }
+
+  traverseInOrder(node.left);
+  System.out.println(node.data);
+  traverseInOrder(node.right);
+}
+```
 
 
 
@@ -243,74 +396,58 @@ public static Node getNodeOrNull(Node node, int data) {
 
 <br>
 
+# 전위 순회, 후위 순회
 
+## 전위 순회
 
+- 루트 노드부터 시작
+- 다음 단계를 재귀적으로 실행
+  - 내 노드를 먼저 나열
+  - 왼쪽 하위 트리의 노드를 나열
+  - 오른쪽 하위 트리의 노드를 나열
 
+근데 이걸 대체 어디다 쓸까?(이 순서로는 배열로 출력시 정렬도 안됨)
 
+## 전위 순회의 용도1 - 트리 복사
 
+- 부모가 있어야 자식도 추가할 수 있음
+- 따라서 전위 순회가 적합
+  - 부모를 먼저 나열
+  - 다른 순회는 부모가 중간 혹은 마지막
+- 물론 다른 순회로도 복사는 가능
+  - 직관적이지 않을 뿐
 
+## 전위 순회의 용도2 - 수식의 전위 표기법
 
+- 수식은 보통 중위 표기법(infix notation)을 사용
+  - 괄호로 우선 순위를 정해줄 수 있음
+  - 아래 트리를 중위 순회하면 다음 수식이 나옴: A * (B - C) - (D + E)
 
-<br>
+아래 같은 트리를 '표현식 트리expression tree'라고도 한다.
 
+```
+     -
+   /   \
+  *     +
+ / \    /\
+A   -  D  E
+   / \
+  B   C
+```
 
+- 전위 표기법(prefix notation)
+  - 폴란드 표기법(Polish notation)이라고도 불림
+  - 연산자/괄호의 우선 순위가 없음 (읽는 순서대로!) 따라서 컴퓨터로 계산하기 좀더 편함
+  - 위 트리를 표현시 다음 수식이 나옴: -* A - BC + DE
+    - (스택을 활용해 오른쪽 -> 왼쪽 순으로 요소 2개 + 연산기호 1개 단위 연산)
 
+## 후위 순회
 
-
-
-
-
-
-
-
-<br>
-
-
-
-
-
-
-
-
-
-<br>
-
-
-
-
-
-
-
-
-
-
-
-<br>
-
-
-
-
-
-
-
-
-
-<br>
-
-
-
-
-
-
-
-
-
-
-
-<br>
-
-
-
+- 방금 본 예는 후위 순회로 더 쉽게 구현 가능
+  - 앞에서부터 읽으면서 스택에 집어넣으면 끝!
+- 후위 표기법(postfix notation)
+  - 역 폴란드 표기법(reverse Polish notation): ABC -* DE +-
+  - (컴퓨터에서 구현하기 더 친화적(앞은 수학자들이 생각하는 방식(오른쪽 -> 왼쪽)에 더 가깝고, 컴퓨터에선 왼쪽 -> 오른쪽 순으로 읽는게 더 일반적))
 
 
 
@@ -319,9 +456,48 @@ public static Node getNodeOrNull(Node node, int data) {
 
 <br>
 
+# 전위/중위/후위 선택법
+
+## 전위/중위/후위 순회
+
+- 앞에서 본 예 외에도 알고리즘에 따라 셋 중 하나 사용
+- 간단한 가이드
+  - 리프보다 루트를 먼저 봐야 한다면 전위 순회
+  - 리프를 다 본 다음에 다른 노드를 봐야 한다면 후위 순회
+  - 순서대로 봐야 한다면 중위 순회
+
+
+## BST 끝!
+
+- BST는 '이진 트리 + a'
+- a
+  - 왼쪽 자식은 언제나 부모보다 작다
+  - 오른쪽 자식은 언제나 부모 이상
+
+앞에 잠시 스쳐간 것 중 또 '이진 트리 + a'가 있었다. 힙 정렬에서 본 힙이라는 자료구조. 흔히 사용하진 않으니 있다는 것만 참고.
 
 
 
+
+
+
+<br>
+
+# 코드보기: 깊은 트리 복사
+
+```java
+public static Node copyRecursive(final Node node) {
+  if (node == null) {
+    return null;
+  }
+
+  Node newNode = new Node(node.data);
+  newNode.left = copyRecursive(node.left);
+  newNode.right = copyRecursive(node.right);
+
+  return newNode;
+}
+```
 
 
 
@@ -347,6 +523,10 @@ public static Node getNodeOrNull(Node node, int data) {
   - 그 외 연산은 BST와 동일(단, 탐색 속도가 BST보다 빠를 것임)
 
 균형? -> 레드와 블랙 노드 사이의 균형!
+
+
+
+
 
 
 
@@ -387,6 +567,8 @@ public static Node getNodeOrNull(Node node, int data) {
   - 블랙 노드 사이에 하나씩만 넣을 수 있음
 - 따라서 루트 -> 리프의 최대 길이는 2x개의 노드로 구성
   - 참고: NIL 리프 노드는 세지 않았음
+
+
 
 
 
@@ -457,6 +639,151 @@ public static Node getNodeOrNull(Node node, int data) {
 
 
 
+
+
+<br>
+
+# 레드-블랙 트리 삽입 전략
+
+## 레드-블랙 트리 삽입의 시간 복잡도
+
+- 노드를 리프에 삽입 -> O(logN)
+- 새 노드 색을 레드로 칠함 -> O(1)
+- 망가진 레드-블랙 트리의 특성을 고침 -> O(logN)
+  - 색상 바꾸기: O(1)
+  - 트리 회전: O(1)
+
+O(logN)
+
+
+## 새 노드가 오른쪽에 추가되는 경우에는?
+- 여태까지 예는 모두 왼쪽 하위 트리에 새 노드가 추가됨
+- 오른쪽에 추가되어도 해법은 똑같음
+  - 트리 회전할 때 방향만 반대로 하면 됨
+- 이 4가지 상황(case)을 잘 정리한 게 앞에서 언급한 전략 (strategy)
+  - 이걸 굳이 암기하고 있을 필요는 없음
+  - 보통 필요할 때마다 찾아보며 해결
+
+`https://en.wikipedia.org/wiki/Red%E2%80%93black_tree`
+
+## (supplementarty)레드-블랙 트리 삽입 전략 - Case1
+
+- 상황: 현재 노드 N이 트리의 루트
+- 전략: N을 블랙으로 바꾼다
+
+## (supplementarty)레드-블랙 트리 삽입 전략 - Case2
+
+- 상황: N의 부모 P가 블랙
+- 전략: 아무 것도 안 함
+
+## (supplementarty)레드-블랙 트리 삽입 전략 - Case3
+
+- 상황: P와 삼촌 U가 모두 레드, 조부모 G는 블랙
+- 전략: P, U, G의 색을 바꾼다
+- G부터 다시 실행!
+
+## (supplementarty)레드-블랙 트리 삽입 전략 - Case4 단계1
+
+- 상황: P는 레드, U는 블랙
+- 전략: N이 하위 트리의 안쪽에 있지 않도록 회전
+- 그리고 단계 2로 진행
+
+## (supplementarty)레드-블랙 트리 삽입 전략 - Case4 단계2
+
+- 상황: 이제 N이 하위 트리의 바깥쪽에 있음
+- 전략: G에서 우회전 후 P와 G의 색을 바꿈
+
+
+
+
+
+
+
+<br>
+
+# 레드 블랙 트리의 삭제 방법
+
+## 일반적인 레드-블랙 트리 삭제 강의
+
+- 웬만한 강의에서 설명도 없이 은근슬쩍 넘어가는 내용
+- 하더라도 전략의 암기를 돕기 위해 이상한 비유를 듬
+  - 레드는 화난 상태, 블랙은 차분한 상태
+  - '니가 아버지의 차분함을 가져가고 아버지를 화나게 만들어서 니 형이 화가 나' 등
+- 케이스만 6개
+  - 케이스 적용 전에 미리 전처리를 해야 함
+
+## POCU의 접근법
+- 몇 가지 예를 보면서 감만 잡으려 노력
+  - 쉬운 문제들은 혼자 풀 수 있을 것임
+  - 적당히만 어려워도 스스로 답을 찾기 어려움
+- 문제를 풀다가 전략을 도출하려는 노력따위 하지 않음(...)
+- 문제 다 푼 뒤에는 그냥 전략을 보고 끝
+
+## 레드-블랙 트리의 삭제 방법(큰 그림)
+
+1. BST에서 삭제하듯이 우선 삭제한다
+  - 지우려는 값을 가진 노드를 찾음
+  - 교환할 NIL 아닌 노드 M을 찾음
+  - 값을 복사해옴(색은 복사 안 함)
+  - M을 지움
+2. 레드-블랙 트리의 특성이 망가진 걸 고치려 열심히 노력한다(...)
+
+## 자식의 경우의 수는 생각보다 간단
+
+- M은 언제나 오른쪽 하위 트리의 최솟값
+  - (또는 왼쪽 하위 트리의 최댓값)
+  - M의 왼쪽에 다른 값이 있을 수 없음
+    - BST의 삭제 방법 때문
+  - 오른쪽에는 값이 있을 수 있음
+- 결국 다음과 같은 자식을 가진 노드를 지우는 문제
+  - 자식이 모두 NIL
+  - 자식 중 하나만 NIL
+- 따라서 이런 경우만 볼 계획 <- 중요! 꼭 기억!
+
+
+
+
+
+
+<br>
+
+# MC THE BLACK
+
+레드-블랙 트리 삭제에 있어 복잡한 문제는 M과 C가 모두 BLACK일 때만 생긴다.
+
+## M과 C가 모두 블랙일 때만 문제인 이유
+
+- M이 레드면 C는 반드시 블랙
+  - 이건 쉬운 경우임을 이미 봤음
+- M이 블랙이고 C가 레드인 경우는?
+  - C의 한 쪽 자식은 무조건 NIL(BST의 삽입 규칙에 따라)
+  - C의 다른 쪽 자식이 레드일 순 없음
+  - C의 다른 쪽 자식이 NIL이 아닌 블랙일 수도 없음
+  - C의 자식은 무조건 NIL!
+  - 아주 간단히 해결!
+
+
+
+
+
+<br>
+
+# (supplementary)레드-블랙 삭제 전략1
+
+## 레드-블랙 삭제 전략(개요)
+
+- 총 6 개 case
+- 트리가 망가진 걸 고치기 위해 사용
+  - M, C가 모두 블랙일 때
+  - M 삭제 후, N을 기준으로 
+- 다음처럼 재귀적으로 작동(영상 참고...)
+
+## 레드-블랙 트리 삭제의 시간 복잡도
+
+- BST 방식으로 노드를 제거 -> O(logN)
+- 망가진 레드-블랙 트리의 특성을 고침 -> O(logN)
+  - 색상 바꾸기: O(1)
+  - 트리 회전: O(1)
 
 
 
