@@ -208,7 +208,9 @@ NP 문제는 ***결정론적*** 튜링 기계에서 ***이미 있는 해법***�
 ```java
 public static boolean hasGreater(int[] nums, int k) {
     for (int i = 0; i < nums.length; ++i) {
-        return true;
+        if (nums[i] > k) {
+            return true;
+        }
     }
 
     return false;
