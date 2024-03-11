@@ -32,19 +32,19 @@
 
 ```java
 public static void searchDepthFirst(Node node) {
-  Stack<Node> stack = new Stack<>();
+    Stack<Node> stack = new Stack<>();
 
-  stack.push(node);
+    stack.push(node);
 
-  while (!stack.empty()) {
-    Node next = stack.pop();
+    while (!stack.empty()) {
+        Node next = stack.pop();
 
-    System.out.println(next.data);
+        System.out.println(next.data);
 
-    for (Node child : next.children) {
-      stack.push(child);
+        for (Node child : next.children) {
+            stack.push(child);
+        }
     }
-  }
 }
 ```
 
@@ -69,20 +69,20 @@ public static void searchDepthFirst(Node node) {
 ## 너비 우선 탐색 코드
 
 ```java
-public static void searchDepthFirst(Node node) {
-  Queue<Node> stack = new LinkedList<>();
+public static void searchBreadthFirst(Node node) {
+    Queue<Node> queue = new LinkedList<>();
 
-  queue.add(node);
+    queue.add(node);
 
-  while (!queue.empty()) {
-    Node next = queue.remove();
+    while (!queue.empty()) {
+        Node next = queue.remove();
 
-    System.out.println(next.data);
+        System.out.println(next.data);
 
-    for (Node child : next.children) {
-      queue.add(child);
+        for (Node child : next.children) {
+            queue.add(child);
+        }
     }
-  }
 }
 ```
 
