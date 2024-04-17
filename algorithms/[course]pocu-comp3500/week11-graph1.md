@@ -248,10 +248,10 @@ eg. G[2][2] = 0
 |장점|단점|
 |---|---|
 |* 공간을 적게 사용|* 다음과 같은 관계를 찾는 게 느림|
-|  * O(N + E)|  * 노드 a에서 b로 가는 변이 존재하는가?|
-|  * 최악(모든 노드끼리 연결돼 있을 시): O(N^2) = O(N + (N+ ((N - 1)/2))|  * O(1)보다 느림|
+|・・・・* O(N + E)|・・・・* 노드 a에서 b로 가는 변이 존재하는가?|
+|・・・・* 최악(모든 노드끼리 연결돼 있을 시): O(N^2) = O(N + (N+ ((N - 1)/2))|・・・・* O(1)보다 느림|
 |* 삽입/삭제가 빠름| |
-|  * 연결 리스트를 사용했을 경우| |
+|・・・・* 연결 리스트를 사용했을 경우| |
 
 
 ## (supplementary)기타 표현 방법
@@ -527,7 +527,7 @@ public static void searchDepthFirst(Node node) {
   - 당연히 적게 연결할수록 비용 절감
   - 하지만 모든 집에 식수가 도달해야 함
 
-![scc](./../resources/scc.jpg)
+![scc](resources/scc.jpg)
 
 어느 노드가 적합할까?
 
@@ -658,7 +658,7 @@ public static void searchDepthFirst(Node node) {
   * 13245: 1 543 2 -> 2 345 1
   * 52431: 435 12 -> 21 534
 
-![kosaraju-graph](./../resources/kosaraju-example-graph.jpg)
+![kosaraju-graph](resources/kosaraju-example-graph1.jpg)
 
 * 일반화
   * C1과 C2는 G에 있는 강한 결합 요소
@@ -689,7 +689,7 @@ public static void searchDepthFirst(Node node) {
   * C1과 C2는 완전히 분리
   * C1과 C2는 독자적인 SCC!
 
-![kosaraju-scc](./../resources/kosaraju-scc.jpg)
+![kosaraju-scc](resources/kosaraju-scc.jpg)
 
 
 ## 강한 결합 요소의 용도
@@ -725,8 +725,6 @@ public static void searchDepthFirst(Node node) {
   - 경력, 경험, 패턴 익히며 알아가는 것이다. 한 번에 모든 걸 설명하긴 어렵다.
 - 강한 결합 요소
   - 최근 SNS 등에서 활용도가 높아 주목을 받고 있다.
-
-
 
 
 
