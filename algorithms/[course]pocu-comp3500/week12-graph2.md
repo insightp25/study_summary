@@ -319,6 +319,398 @@ n^2 -> 수백만^2(...)
 
 ## 다익스트라와 음의 가중치
 
+- 다익스트라는 음의 변이 있을 경우 오작동
+  - 한 번 방문한 노드는 다시 방문 안 하기 때문
+    - 변의 가중치가 언제나 양수라 가정한 알고리즘
+      - 다음 거리는 언제나 이미 방문한 거리 이상
+
+![negd](resources/negd.png)
+
+그럼 음수인 변이 있으면 최단 거리를 못 찾나요? -> 벨만-포드 알고리즘으론 된다!
+
+
+
+
+
+
+
+
+<br><br><br>
+
+---
+
+# 코드보기: 우선순위 큐를 사용한 다익스트라 알고리즘
+
+```java
+public final class Node {
+	private final String name;
+	private final HashMap<Node, Integer> roads = new HashMap<>();
+
+	public Node(final String name) {
+		this.name = name;
+	}
+
+	public Map<Node, Integer> getRoads() {
+		return this.roads;
+	}
+
+	public void addRoad(final Node to, final int dist) {
+		this.roads.put(to, dist);
+	}
+
+	public int getDistance(final Node to) {
+		return this.roads.get(to);
+	}
+}
+```
+
+```java
+public class Dijkstra {
+	private Dijkstra() {
+	}
+
+	public static HashMap<String, Integer> run(
+		// nodes에는 언제나 시작 노드(name이 from에 저장된 문자열인 노드)가 있다고 가정
+		// from은 시작 노드의 이름
+		// prevs는 최단 경로에 있는 노드의 선행 노드를 저장하는 맵. eg. 키가 "school", 값이 "police station"이라면, 최단 경로에서 "school" 이전에 방문했던 노드가 "police station"이라는 뜻
+		final HashMap<String, Node> nodes,
+		final String from,
+		final HashMap<String, String> prevs) {
+
+
+		// 메서드의 결과 여기에 기록. 각 노드까지의 최단 거리를 저장하는 맵.
+		HashMap<String, Integer> minDists = new HashMap<>();
+
+		// 각 노드까지의 최단 거리를 일단 무한(Integer.MAX_VALUE)으로 초기화
+		final int INF = Integer.MAX_VALUE;
+		for (var entry : nodes.entrySet()) {
+			String name = entry.getKey();
+
+			minDists.put(name, INF);
+		}
+
+		minDists.put(from, 0);
+
+		prevs.put(from, null);
+
+		// open은 최단 경로일 가능성이 있는 경로(이하 후보 경로)들을 저장
+		PriorityQueue<Candidate> open = new PriorityQueue<>();
+
+		// candidate는 후보 경로의 총거리를 나타내는 클래스
+		Nodes s = nodes.get(from);
+		Candidate candidate = new Candidate(s, 0);
+
+		open.add(candidate);
+
+		// 더 이상 후보 경로가 없을 때까지 반복
+		while (!open.isEmpty) {
+			candidate = open.poll();
+
+			// 후보 경로의 거리가 현재까지 알려진 최단 거리보다 길다면 무시하고 다음 후보를 봄
+			Node n = candidate.getNode();
+			String nodeName = n.getName();
+
+			int minDist = minDists.get(nodeName);
+			int dist = candidate.getDistance();
+
+			if (minDist < dist) {
+				continue;
+			}
+
+			Map<Node, Integer> roads = n.getRoads();
+
+			for (var e : roads.entrySet()) {
+				Node next = e.getKey();
+
+				// 각 이웃까지의 새로운 거리 계산
+				int weight = e.getValue();
+				int newDist = minDist + weight;
+
+				String nextName = next.getName();
+				int nextMinDist = minDists.get(nextName);
+
+				// 그 결과를 현재까지 알려진 최단 거리와 비교
+				if (newDist >= nextMinDist) {
+					continue;
+				}
+
+				minDists.put(nextName, newDist);
+				prevs.put(nextName, nodeName);
+
+				Candidate newCandidate = new Candidate(next, newDist);
+
+				open.add(newCandidate);
+			}
+		}
+	}
+}
+```
+```java
+public class Program {
+	public static void main(String[] args) {
+		// 그래프를 만드는 메서드. 코드는 강의에.
+		HashMap<String, Node> nodes = createNodes();
+
+		HashMap<String, String> prevs = new HashMap<>();
+
+		HashMap<String, Integer> minDists = Dijkstra.run(nodes, "Home", prevs);
+
+		int schoolDist = minDists.get("School");
+		System.out.println(schoolDist);
+
+		int bankDist = minDists.get("Bank");
+		System.out.println(bankDist);
+
+		int libDist = minDists.get("Library");
+		System.out.println(libDist);
+
+		// prevs 맵을 사용해 "Home"에서 "School"까지의 최단 경로 찾기
+		LinkedList<String> path = new LinkedList<>();
+
+		String name = "School";
+		while (name != null) {
+			path.addFirst(name);
+			name = prevs.get(name);
+		}
+
+		String pathString = String.join(" -> ", path);
+		System.out.println(pathString);
+	}
+}
+```
+
+
+
+
+
+
+
+
+
+<br><br><br>
+
+---
+
+# A* 알고리즘
+
+## 다익스트라는 훌륭, 하지만...
+
+- 언제나 목적지까지의 최단 경로를 찾아줌
+- 시간 복잡도도 훌륭
+- 실제 똑똑한 알고리즘인지 그려보면?
+
+
+## A* 알고리듬
+
+- 다익스트라와 기본은 같은 알고리듬
+- 하지만 쓸데없는 평가를 피할 수 있음
+- 예: 서울에서 부산 가기
+  - 다익스트라: 경부선, 호남선, 경인선, 경원선을 모두 탐색
+  - A*: 경부선만 따라 쭉 달림
+- 이를 위해 다음 노드 선택 시 기준을 하나 더 추가
+  - 다익스트라의 기준은 시작점부터 노드까지의 거리
+  - A* 가 추가하는 기준은 그 노드로부터 목적지까지의 거리
+
+
+## 현재 노드부터 목적지까지의 거리
+
+- 목적지까지 탐색을 다 하기 전까지는 확실히 모름
+- 따라서 A* 가 추가한 기준은 결정적이 아님!
+  - 휴리스틱
+  - 근사치
+- 이 휴리스틱 함수에 따라 A* 의 성능이 달라짐
+- 대부분의 경우 다익스트라 보다 빠름
+  - 실세계의 대표 경로 찾기 알고리듬이 A* 인 이유
+  - 하지만 데이터 따라 느릴 수도 있음
+
+
+
+
+
+
+
+
+
+
+<br><br><br>
+
+---
+
+# A* 의 노드 선택 기준
+
+## A* 의 두 가지 노드 선택 기준
+
+- g(n): 시작 노드부터 노드 n까지의 거리(실제 값)
+- h(n): n부터 목적지 노드까지의 거리(추정치. h for heuristics.)
+- f(n): 시작 노드부터 목적지 노드까지의 거리(추정치)
+  - f(n) = g(n) +h(n)
+- 다음 노드 선택 시
+  - 다익스트라는 g(n)이 최소인 것을 선택
+  - A* 는 f(n)이 최소인 것을 선택
+
+
+## A* 의 h(n)
+
+- 계속 목적지 방향으로 나아가고 싶음
+  - = 목적지 쪽에 있는 노드를 우선적으로 선택하고 싶음
+  - = 목적지 쪽에 있는 노드의 h(n)이 더 작아야 함
+  - = 목적지에 가까운 노드의 h(n)이 더 작아야 함
+- 즉, h(n)은 거리 함수!
+  - 모든 상황에 최고인 함수는 없음
+  - 상황에 따라 선택
+    - 예: 유클리드 거리, 맨해튼 거리
+
+
+## (supplementary)구현 시 다익스트라와의 차이점
+
+- OPEN이란 이름의 노드 집합이 있음
+  - 방문할 최단 경로 후보 노드들이 들어있음
+- OPEN 안에 있는 후보 선택 시 최소 f(n)을 이용
+- 같은 노드를 두 번 이상 방문할 수 있음
+  - 그 이유는 뒤에 봄
+
+
+
+
+
+
+
+
+
+
+<br><br><br>
+
+---
+
+# A* 알고리즘
+
+## (supplementary)A* 알고리즘
+
+1. 그래프에 있는 모든 노드의 g(n)과 f(n)을 ∞으로 초기화
+2. g(s) = 0, f(s) = h(s)
+3. 시작 노드 s를 OPEN에 추가
+4. OPEN에서 f(n)이 가장 작은 노드를 찾아 제거
+5. n의 각 이웃 m에 대해 시작점 -> n -> m이 더 짧은 경로라면
+  - g(m)을 업데이트
+  - m을 OPEN에 추가
+6. 목적지에 도달하거나 OPEN이 빌 때까지 4~5번 과정을 반복
+
+A* 는 heuristic이기 때문에 반드시 최단 경로를 알려주지는 않는다. 그보단 얼마나 빠르게 연산할 수 있는지가 중요한 알고리즘.
+
+
+
+
+
+
+
+<br><br><br>
+
+---
+
+# h(n) 함수에 대한 이해
+
+## h(n) 함수에 대한 이해
+
+- h(n)의 결과와 실제 결과의 관계에 따라 A* 알고리듬이 행동이 바뀜
+- 몇 가지 관계를 볼 예정
+- 그전에 함수 하나를 정의하자!
+  - h'(n):n -> 목적지로 이동하는 실제 비용
+
+h'(n)은 실제 거리
+
+
+## h(n) == 0
+
+- h(n)이 언제나 0인 경우
+- A* 가 다익스트라 알고리즘과 똑같이 동작
+
+f(n) = g(n) + h(n)  
+f(n) = g(n) + 0  
+f(n) = g(n)  
+
+
+## h(n) <= h'(n)
+
+- 추정 거리가 실제 거리 이하인 경우
+- 이때 h(n)을 허용할 수 있다(admissible)고 함
+- 언제나 이러면 A* 는 최단 거리를 찾음
+  - 하나라도 안 그러면 보장 못 함
+
+h(n) <= h'(n) 이 조건을 만족하도록 h()함수를 유지하는 게 은근히 중요.
+
+
+## h(n) << h'(n)
+
+- 추정 거리가 실제 거리보다 훨씬 작음
+- A* 가 더 많은 경로를 탐색
+- 따라서 탐색 범위가 넓어짐
+  - 다익스트라가 굉장히 넓게 탐색했던 걸 기억할 것!
+  - 속도가 느려짐
+
+
+## h(n) == h'(n)
+
+- 추정 거리가 실제 거리와 같음
+- 언제나 최고의 경로를 따라 감
+- 알고리즘이 매우 빠름!
+
+
+
+
+
+
+
+
+
+<br><br><br>
+
+---
+
+# A* 의 중복 방문과 시간 복잡도
+
+## A* 가 중복 방문을 허용하는 이유
+
+- 다익스트라는 새로 방문하는 노드의 실제 거리가 최소
+  - 실제 거리 g(n)만 노드를 뽑는 기준으로 사용하기 때문
+  - 이미 최소기에 더 이상 작아질 수 없음
+- A* 는 새로 방문하는 노드의 거리가 실제 거리가 아님
+  - h(n)으로 추정하는 부분이 있음
+  - 지금 최소 거리라 믿고 뽑는 노드가 실제로는 최소가 아닐 수 있음
+  - 나중에 다른 경로를 통해 방문하면 거리가 작아질 수도 있음
+- 그러나 h(n)이 특정 조건을 만족하면 노드를 한 번씩만 방문함
+  - 일관적(consistent)/단조로운(monotone) 휴리스틱
+  - 특정 조건: h(n) <= dist(n, m) + h(m)
+
+
+## (supplementary)시간 복잡도
+
+- 여러 가지 요소에 따라 달라짐
+  - OPEN에 사용하는 자료 구조
+  - 휴리스틱 함수 h(n)
+- 다음과 같은 경우에는 시간 복잡도가 다익스트라와 같아짐
+  - h(n)이 O(1)
+  - OPEN이 피보나치 힙을 사용
+- 참고: AI 분야에서는 O(b^d)로 시간 복잡도를 나타냄
+  - b: branch sector. 한 노드에 왔을 때 몇 개의 브랜치를 나눠서 볼 것인지.
+  - d: depth. 그 브랜치로 갔을 때 깊이가 몇인지. 결국, 최단 경로를 말하는 것.
+
+A* 는 시간 복잡도는 똑같아도 실행되는 속도를 빠르게 하기 위한 방법이었고, 그걸 위해 휴리스틱을 사용했을 뿐이다. 시간 복잡도가 같아도 실무에선 A* 가 압도적으로 빠른 경우가 훨씬 많아.
+
+
+
+
+
+
+
+
+<br><br><br>
+
+---
+
+
+
+
+
 
 
 
@@ -341,14 +733,6 @@ n^2 -> 수백만^2(...)
 
 
 
-<br><br><br>
-
----
-
-
-
-
-
 
 
 
@@ -362,79 +746,6 @@ n^2 -> 수백만^2(...)
 
 
 
-
-
-
-
-
-<br><br><br>
-
----
-
-
-
-
-
-
-
-
-
-
-<br><br><br>
-
----
-
-
-
-
-
-
-
-
-
-
-<br><br><br>
-
----
-
-
-
-
-
-
-
-
-
-
-<br><br><br>
-
----
-
-
-
-
-
-
-
-
-
-
-<br><br><br>
-
----
-
-
-
-
-
-
-
-
-
-
-<br><br><br>
-
----
 
 
 
