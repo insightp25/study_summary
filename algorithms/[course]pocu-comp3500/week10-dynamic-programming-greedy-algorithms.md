@@ -231,11 +231,11 @@ public static int fibonacci (int number) {
 
 ## 동적 계획법으로 푼 배낭 문제 공식
 
-- 여태까지본걸공식으로만들면...
+- 여태까지 본 걸 공식으로 만들면...
 - `cell[i][j]`의 값은 다음 중 큰 값
   - 현재 물품 추가 전의 최댓값(`ce11[i - 1][j]`)
-  - 현재물품의값
-    + 남은공간에넣을수있던최댓값(`cell[i - 1][j - item.space]`)
+  - 현재 물품의 값
+    + 남은 공간에 넣을 수 있던 최댓값(`cell[i - 1][j - item.space]`)
 
 
 ## 배낭 문제 + 메모이제이션
@@ -337,10 +337,10 @@ public static int fibonacci (int number) {
 
 ## 그리디(greedy,탐욕)알고리즘
 
-- 그 순간 최적(locallyoptimal)의 해법을 찾는 방법
+- 그 순간 최적(locally optimal)의 해법을 찾는 방법
   - 미래를 전혀 생각하지 않음
   - 탐욕에 눈이 멀면 이렇게 행동한다고 해서 붙은 이름
-- 최종적으로 최적(globallyoptimal)해법이 안 나올 수도 있음
+- 최종적으로 최적(globally optimal)해법이 안 나올 수도 있음
   - 그러나 충분히 괜찮은 해법인 경우가 많음
   - 빠른 의사 결정이 가능
 - ***근사(approximation) 알고리즘***!

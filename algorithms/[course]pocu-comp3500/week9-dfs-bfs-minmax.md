@@ -163,7 +163,7 @@ public static void searchBreadthFirst(Node node) {
 1. 상대방이 이길 수 있는 보드 구성을 주지 않는다
 2. 그러나 내가 이길 수 있는 가능성은 열어 둔다
 
-상대방의 최대 이득이 나는 경우를 최소화한다 = 내 최대 손실이 나는 경우를 최소화한다)
+상대방의 최대 이득이 나는 경우를 최소화한다 = 내 최대 손실이 나는 경우를 최소화한다
 
 (minimizing opponent's maximum -> minimax)
 
