@@ -94,6 +94,7 @@ class IterativeDFS2 {
         Stack<Node> stack = new Stack<>();
 
         stack.push(node);
+        discovered.add(node);
 
         while (!stack.isEmpty()) {
             node = stack.pop();
