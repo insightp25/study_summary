@@ -18,8 +18,8 @@
 - Node라는 가상 클래스를 담고있는 node 객체 임의 사용
 
 ```java
-class IterativeDFS2 {
-    public void iterativeDFS2(Node node) {
+class IterativeDFS {
+    public void iterativeDFS(Node node) {
         HashSet<Node> discovered = new HashSet<>();
         Stack<Node> stack = new Stack<>();
 
@@ -47,8 +47,8 @@ class IterativeDFS2 {
 ## 구현 타입 1-B(재귀)
 
 ```java
-class RecursiveDFS2 {
-    public void recursiveDFS2(Node node) {
+class RecursiveDFS {
+    public void recursiveDFS(Node node) {
         HashSet<Node> discovered = new HashSet<>();
         
         dfs(node, discovered);
@@ -89,8 +89,8 @@ class RecursiveDFS2 {
 - int 값들을 요소로 담고있는 graph라는 가상 객체 임의 사용
 
 ```java
-class IterativeDFS1 {
-    public List<Integer> iterativeDFS1(int v) {
+class IterativeDFS {
+    public List<Integer> iterativeDFS(int v) {
         List<Integer> discovered = new LinkedList<>();
         Deque<Integer> stack = new ArrayDeque<>();
 
@@ -119,8 +119,8 @@ class IterativeDFS1 {
 ## 구현 타입 2-B(재귀)
 
 ```java
-class RecursiveDFS1 {
-    public List<Integer> recursiveDFS1(int v) {
+class RecursiveDFS {
+    public List<Integer> recursiveDFS(int v) {
         List<Integer> discovered = new LinkedList<>();
 
         dfs(v, discovered);
