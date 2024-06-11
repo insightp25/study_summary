@@ -48,14 +48,31 @@ public class UserServiceTest {
 
 
 
+
 - ```java
         BDDMockito.doNothing().when(mailSender).send(any(SimpleMailMessage.class));
-
 ```
   - 해석: `SimpleMailMessage`를 사용하는 send()가 호출돼도 아무 것도 하지 말라는 명령
-
-
 - `@MockBean private JavaMailSender mailSender;`
+
+
+
+
+- `// FIXME` - IntelliJ IDEA 코드에 작성시 하이라이트 표시
+
+
+
+- error 노트:
+  - 파일 /sql/post-service-test-data.sql 내용에서 post의 id를 1로 설정시 발생. 99 등 다른 값으로 하면 OK.
+  ``` 
+  org.springframework.dao.DataIntegrityViolationException: could not execute statement; SQL [n/a]; constraint ["PRIMARY KEY ON PUBLIC.POSTS(ID) ( /* key:1 */ CAST(1 AS BIGINT), 'written content1', CAST(0 AS BIGINT), CAST(0 AS BIGINT), CAST(1 AS BIGINT))"; SQL statement:
+  insert into posts (id, content, created_at, modified_at, user_id) values (default, ?, ?, ?, ?) [23505-214]]
+  ```
+
+
+
+
+
 
 <br><br>
 
