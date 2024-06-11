@@ -80,6 +80,11 @@ TDD는 이 과정을 모든 개발 단계에서, 무한히 반복한다.
 
 
 
+
+
+
+
+
 <br><br>
 
 # 테스트의 필요성과 테스트 3분류
@@ -175,7 +180,9 @@ SOLID와 테스트는 생각보다 굉장히 긴밀한 상관관계를 갖는다
 당연하게도 우리가 집중해야 하는 것은 소형 테스트이다.
 
 
-### 인용
+<br>
+
+## 인용
 
 - 마이클 C. 페더스, 레거시 코드 활용 전략 손대기 두려운 낡은 코드, 안전한 변경과 테스트 기법, 심윤보 이정문 옮김, (에이콘, 2018-09-18), 12p
 - 타이터스 윈터스, 톰 맨쉬렉, 하이럼 라이트 큐레이션, 구글 엔지니어는 이렇게 일한다 구글러가 전하는 문화, 프로세스, 도구의 모든 것, 개앞맵시 역, (한빛미디어, 2022-05-10), 283p
@@ -188,21 +195,104 @@ SOLID와 테스트는 생각보다 굉장히 긴밀한 상관관계를 갖는다
 
 
 
+
+
+
+
 <br><br>
 
 # 테스트에 필요한 개념
 
+## 1. 개념
+
+### SUT
+
+- system under test(SUT) - 테스트하려는 대상
+  - user 관련 검증 -> SUT는 user
+
+### BDD
+
+- behaviour driven development(given-when-then)
+  - arrange-act-assert(3A)라고도 한다
+
+BDD suggests that unit test names be whole sentences starting with a conditional verb("should" for example) and should be written in order of business value. Acceptance tests should be written using the standard agile framework of a user story
+
+### 상호 작용 테스트(interaction test)
+
+- 대상 함수의 구현을 호출하지 않으면서 그 함수가 어떻게 호출되는지를 검증하는 기법
+  - 메서드가 실제로 호출이 됐는지를 검증하는 테스트
+  - 일반적으로, 이렇게 메서드가 실제로 호출이 됐는지 검증하는 방법은 그다지 좋은 방법이 아니다. 왜냐하면 이게 내부 구현을 어떻게 했는지 '감시'하는 것이기 때문. 캡슐화 위배.
+  - 객체한테 위임한 책임을, 이 객체가 제대로 수행했는지만 확인하면 되는데, 일을 이리 해라 저리해라 감시하는 것. 구현에 집착하는 것.
+  - (개개인마다 호불호가 있다)
+
+### 상태 검증 vs 행위 검증
+
+- 상태 기반 검증(state-based verification)
+  - input -> output
+- 행위 기반 검증(behaviour-based verification) = 상호 작용 테스트
+
+### 테스트 픽스처
+
+- 테스트에 필요한 자원을 생성하는 것
+  - fixture - 비품, 설비
+  - 테스트 하기 위해 필요한 자원이 있다면 미리 생성해두는 것
+  - 테스트가 한 눈에 잘 안들어와 왠만한 코드 중복이 발생하지 않는 한 잘 선호하지 않는다(의견).
+
+### 비욘세 규칙
+
+- 비욘세의 싱글 레이디 중
+  - 네가 나를 좋아했다면, 프로포즈를 했었어야지
+  - 상태를 유지하고 싶었다면, 테스트를 만들었어야지
+- (구글에서 만든 규칙)
+- "유지하고 싶은 상태나 정책이 있다면 전부 테스트로 작성해주세요. 그게 곧 정책이 될 겁니다."
+  - eg. 유저 아이디가 이메일 형식이길 원하면, 유저 아이디가 이메일이 아닐 때 예외를 던지는 테스트를 작성
+  - eg2. 마일리지 쿠폰이 5만원 이상일 때만 사용 가능하게 하고 싶다면, 5만 원 미만이면 예외를 던지는 그런 테스트를 작성
+  - 이런 것들이 모여 시스템의 정책이 된다.
+
+### 테스트는 정책이고 계약입니다
+
+- 휴가로 부재중일 때 누군가 문서를 안 읽고 코드 변경 -> 테스트로 작성이 돼있었다면? -> 애초에 질문도 안들어 왔을 것
+  - 유지하고 싶은 어떤 상태가 있다면, 전부 테스트로 작성해라
+
+
+### Testablility
+
+테스트 가능성. 소프트웨어가 테스트 가능한 구조인가?
+- (너무 중요한 내용이라 이후에 다시)
+
+### test double
+
+- = 테스트 대역
+
+
+<br>
+
+## 2. 대역
+
+  - dummy
+    - 아무런 동작도 하지 않고, 그저 코드가 정상적으로 돌아가기 위해 전달하는 객체
+  - fake
+    - local에서 사용하거나 테스트에서 사용하기위해 만들어진 가짜 객체
+    - 자체적인 로직이 있다는게 특징
+      - eg. 테스트 중 어떤 내용을 기록한다
+  - stub
+    - 미리 준비된 값을 출력하는 객체
+    - 주로 외부 연동하는 컴포넌트들에 많이 사용
+    - 보통 mockito 프레임워크를 이용해서 구현된다.
+  - spy
+    - 모든 메서드 호출을 낱낱이 기록해두고 있는 객체
+    - 메서드가 몇 번 호출됐는지, 잘 호출됐는지 검증
+    - 이외에 다른 정보도 더 기록해서 검증에 사용하기도 함
+  - mock
+    - 메서드 호출을 확인하기 위한 객체
+    - 자가 검증 능력을 갖춤
+    - 사실상 test double과 동일한 의미로 사용 
 
 
 
+<br>
 
-
-
-
-
-
-
-### 인용
+## 인용
 
 - Wikipedia contributors, "Behavior-driven development," Wikipedia, The Free Encyclopedia, https://en.wikipedia.org/w/index.php?title=Behavior-driven_development&oldid=1138005827 (accessed February 13, 2023).
 - 타이터스 윈터스, 톰 맨쉬렉, 하이럼 라이트 큐레이션, 구글 엔지니어는 이렇게 일한다 구글러가 전하는 문화, 프로세스, 도구의 모든 것, 개앞맵시 역, (한빛미디어, 2022-05-10), 366p
@@ -215,12 +305,6 @@ SOLID와 테스트는 생각보다 굉장히 긴밀한 상관관계를 갖는다
 
 
 
-<br><br>
-
-# 
-
-
-
 
 
 
@@ -229,7 +313,101 @@ SOLID와 테스트는 생각보다 굉장히 긴밀한 상관관계를 갖는다
 
 <br><br>
 
-# 
+# 의존성과 Testability(1)
+
+## 1. 의존성
+
+### 의존성이란?
+
+> dependency(computer science) or coupling, a state in which one object uses a function of another object - Wikipedia
+
+A는 B를 사용하기만 해도 A는 B에 의존한다고 할 수 있다.
+
+사실 소프트웨어 공학에서 마하는 의존성 자체를 완전히 제거할 수는 없다. 의존성을 제거한다는 말은 객체 간의 협력을 부정하는 것, 또는 시스템 간의 협력을 부정하는 것이다. 그래서 대부분의 디자인 패턴(시스템)이나 설계는 어떻게 하면 의존성을 약화시킬 수 있는지를 고민한 결과물이다(의존성을 없애는 방향이 아니다).
+
+
+### 의존성의 종류
+
+의존성의 종류는 매우 다양하고 각 의존성마다 강도가 다르다.
+
+- Wikipedia contributors, "Coupling (computer programming)," Wikipedia, The Free Encyclopedia, https://en.wikipedia.org/w/index.php?title=Coupling_(computer_programming)&oldid=1086406506 (accessed February 13, 2023).
+
+
+### 의존성 역전
+
+> dependency injection과 dependency inversion은 다르다.
+
+- dependency injection은 의존성 주입(DI)  
+- dependency inversion은 의존성 역전(SOLID-DIP)
+
+### 의존성 역전이란?
+
+> 첫 째, 상위 모듈은 하위 모듈에 의존해서는 안된다. 상위 모듈과 하위 모듈 모두 추상화에 의존해야 한다.  
+둘 째, 추상화는 세부 사항에 의존해서는 안된다. 세부사항이 추상화에 의존해야 한다.
+
+"(의존 관계를 나타내는)화살표의 방향을 바꾸는 테크닉"이라고 봐도 된다.
+
+> 고수준 정책을 구현하는 코드는 저수준 세부사항을 구현하는 코드에 절대로 의존해서는 안 된다. 대신 세부사항이 정책에 의존해야 한다. - 로버트 C. 마틴, 클린 아키텍처 소프트웨어 구조와 설계의 원칙
+
+> 자바와 같은 정적 타입 언어에서 이 말은 use, import, include 구문은 오직 인터페이스나 추상 클래스 같은 추상적인 선언만을 참조해야 한다는 뜻이다. (중략) 우리가 의존하지 않도록 피하고자 하는 것은 바로 변동성이 큰 구체적인 요소다. - 로버트 C. 마틴, 클린 아키텍처 소프트웨어 구조와 설계의 원칙
+
+- 인터페이스나 추상 클래스 같은 추상적인 선언 -> 정책
+- 변동성이 큰 구체적인 요소 -> 세부사항
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+
+# 의존성과 Testability(2)
+
+## 2. 의존성과 테스트
+
+### 갑자기 의존성은 왜?
+
+테스트를 잘 하려면 의존성 주입과 의존성 역전을 잘 다룰 수 있어야 한다.
+
+
+### SOLID -> DIP: 의존성 역전 원칙
+
+대부분의 소프트웨어 문제는 의존성 역전으로 해결이 가능하다.
+
+...to be continued
+
+<br>
+
+## 3. Testability
+
+...to be continued
+
+
+
+
+<br>
+
+## 인용
+
+- Wikipedia contributors, "Dependency," Wikipedia, The Free Encyclopedia, https://en.wikipedia.org/w/index.php?title=Dependency&oldid=1090325642 (accessed January 23, 2023).
+- Wikipedia contributors, "Coupling (computer programming)," Wikipedia, The Free Encyclopedia, https://en.wikipedia.org/w/index.php?title=Coupling_(computer_programming)&oldid=1086406506 (accessed February 13, 2023).
+- 위키백과 기여자, "의존관계 역전 원칙," 위키백과, , https://ko.wikipedia.org/w/index.php?title=의존관계_역전_원칙&oldid=31527077 (2023년 1월 23일에 접근).
+- 로버트 C. 마틴 저, 클린 아키텍처 소프트웨어 구조와 설계의 원칙, 송준이 옮김, (인사이트(insight), 2019-08-20), 65p
+- 로버트 C. 마틴 저, 클린 아키텍처 소프트웨어 구조와 설계의 원칙, 송준이 옮김, (인사이트(insight), 2019-08-20), 92p
+
+
+
+
 
 
 
