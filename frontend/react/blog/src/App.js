@@ -9,7 +9,7 @@ function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleSubmit = (formData) => {
     console.log('Form submitted:', formData);
-    // Here you would typically send the data to your server
+    // 서버에 데이터 전송
     setIsModalOpen(false);
   };
   const [modalIndex, setModalIndex] = useState(0); // is this be called seamless?
@@ -122,7 +122,7 @@ function ConsultationModal({ isOpen, onClose, onSubmit }) {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [agreeToTerms, setAgreeToTerms] = useState(false);
-  const phoneNumber = '01047950277'; // Replace with the actual phone number
+  const phoneNumber = '01012345678';
 
   const resetForm = useCallback(() => {
     setName('');
