@@ -1,0 +1,925 @@
+<!-- for cases below quiz.6 -->
+<!-- <button>버튼</button> -->
+<!-- div></div> -->
+
+
+<!-- for quiz.6 -->
+<div style='display: none'>modal1</div>
+<div style='display: none'>modal2</div>
+<div style='display: none'>modal3</div>
+
+<button>button1</button>
+<button>button2</button>
+<button>button3</button>
+
+
+
+<br></br>
+<br></br>
+<br></br>
+--------------
+<br></br>
+
+
+
+
+
+<script>
+
+
+	
+</script>
+
+
+
+
+
+
+<script>
+
+
+	
+</script>
+
+
+
+
+
+
+
+<script>
+
+
+	
+</script>
+
+
+
+
+
+
+
+<script>
+
+
+	
+</script>
+
+
+
+
+
+
+<script>
+
+
+	
+</script>
+
+
+
+
+
+
+
+<script>
+
+
+	
+</script>
+
+
+
+
+
+
+
+<script>
+
+	
+</script>
+
+
+
+
+
+
+
+shadow DOM
+<input type="range">
+<div id="mordor"></div>
+<label>ewfefwwef</label>
+
+<custom-input></custom-input>
+<template id="template1">
+	<label>이메일을 입력해주세요</label><input>
+	<style>label {color : red}</style>
+</template>
+
+
+
+
+<script>
+
+	document.querySelector('#mordor').attachShadow({mode : 'open'});
+	document.querySelector('#mordor').shadowRoot.innerHTML = 
+	'<p>심연에서 왔도다</p>'
+
+	class Sample extends HTMLElement {
+		connectedCallback() {
+			this.attachShadow({mode : 'open'});
+			this.shadowRoot.append(template1.content.cloneNode(true))
+
+			let el = this.shadowRoot.querySelector('label');
+			el.addEventListener('click', function(){
+				console.log('just clicked');
+			})
+		}
+	}
+	customElements.define("custom-input", Sample);
+
+
+	
+</script>
+
+
+
+
+
+
+
+...
+24. async/await
+23. promise 
+22. sync/async & callback
+<script>
+
+
+	
+</script>
+
+
+
+
+
+
+21. import/export
+<script>
+// <script src="library.js"> // 보통 프엔에선 이렇게 써라
+// <script type="module">  // react, angular 쓸 때, 또는 js 나눌 때
+// <script type="library.js"> // 구버전 방법
+	// skipped for later
+	
+	// // local 실행시 CORS, http-server로 실행시 문제 발생 많아서 스킵
+  	// // 자꾸 과거 library.js 읽어오는 현상 발생
+
+	// // index.html
+	// // 1
+	// // import aaa from '/library.js';
+	// // console.log(aaa);
+
+	// // 2
+	// import redefinedC, * from '/library.js';
+
+  	// console.log(a + b + redefinedC); // Outputs: 60
+	
+</script>
+
+
+
+
+
+
+20. destructuring(a.k.a pattern matching)
+<script>
+
+// skipped for later
+	
+</script>
+
+
+
+
+
+
+
+19. getter / setter
+<script>
+	// 기본적으로 클래스내 데이터를 주무르는 함수를 만드는 이유는, 메서드를 콜할 때 데이터를 직접 코드로 다루면서 발생하는 실수(+parseInt() 등 함수내에서 무결성 보장 위한 코드 삽입 등)를 줄이기 위해서 -> getAge(), setAge() 등 만듬 -> 콜할 때 소괄호 제거 위해 get, set 키워드 사용
+	// //1
+	// var Person = {
+	// 	name: 'park',
+	// 	age: 30,
+	// 	get nextAge() { // get 붙여 정의시 콜의 person.nextAge()에서 소괄호 제거하고 person.nextAge 처럼 콜할 수 있게 된다(get, set 붙일시 함수를 property화 해준다).
+	// 		return this.age + 1;
+	// 	},
+	// 	set setAge(age) { // set 키워드도 get 사례와 마찬가지. 단, 인수가 1개 존재해야한다.
+	// 		this.age = parseInt(age);
+	// 	}
+	// }
+
+	// //2
+	// class Person {
+	// 	constructor() {
+	// 		this.name = 'park';
+	// 		this.age = 30;
+	// 	}
+	// 	get nextAge() {
+	// 		return this.age + 1;
+	// 	}
+	// 	set setAge(age) {
+	// 		this.age = age;
+	// 	}
+	// }
+
+	// var person1 = new Person();
+	
+</script>
+
+
+
+
+
+
+18. extends/super
+<script>
+	// // extends 한 class는 this 그냥 못 쓴다. super() 다음에 써야함.
+	// class Grandfather {
+	// 	constructor(name) {
+	// 		this.familyName = 'kim';
+	// 		this.name = name;
+	// 	}
+	// 	sayHi() {
+	// 		console.log('hi, this be grandpa');
+	// 	}
+	// }
+
+	// class Father extends Grandfather {
+	// 	constructor(name) {
+	// 		super(name);
+	// 		this.age = 50;
+	// 	}
+	// 	sayHi() {
+	// 		console.log('hi, this be father');
+	// 		super.sayHi();
+	// 	}
+	// }
+
+	// var father1 = new Father('jaseh');
+
+</script>
+
+
+
+
+
+
+16~17. ES5(2010): Object.create, Class
+<script>
+	// //상속기능 구현: prototype, function 통한 생성자 -> 옛날 방식
+	// //ES5 방법: Object.creat()
+	// // eg. Object.create(prototypeObject);
+	// var parent = {name: 'kim', age: 50};
+	// var child = Object.create(parent); // prototype을 parent로 해주세요~
+	// var grandchild = Object.create(child);
+	
+	// ES6 방법: class
+	class Parent {
+		constructor() {
+			this.name = 'kim';
+			// this.sayHi = function() {
+			// 	console.log('hello');
+			// }
+		}
+		sayHi() {
+			console.log('hello');
+		}
+	}
+
+	Parent.prototype.sayHaha = function() {
+		console.log('haha')
+	};
+	// child.prototype.sayHaha = function() {'...'}; // error
+	// child.__proto__.sayHaha = function() {'...'}; // error
+
+	var child = new Parent();
+	// child.__proto__;
+	// Object.getPrototypeOf(child);
+
+</script>
+
+
+
+
+
+
+15. prototype2
+<script>
+	// // 1. prototype은 함수에만 몰래 생성된다
+	// // 2. class의 메타정보를 검사하고 싶다면 __proto__
+	// function Student(name, age) {
+	// 	this.name = name;
+	// 	this.age = age;
+	// 	this.sayHi = function() {
+	// 		console.log('hi, this is ' + this.name + '. what up?');
+	// 	}
+	// 	this.memberFunc = function() {
+	// 		console.log('memberFunc call');
+	// 	}
+	// }
+	// Student.prototype.gender = 'male';
+	// Student.prototype.protoFunc = function() {
+	// 	console.log('protoFunc call');
+	// }
+
+	// var student = new Student('kim', 20);
+	// var student2 = new Student('lee', 10);
+
+	// console.log(Student.prototype.gender); //male
+	// console.log(student.__proto__.gender); //male
+
+	// // __proto__를 이용해 부모님 강제 등록하기
+	// // 참고: undefined에는 메타정보가 없다 //prototype도 없다
+	// var parent = {name: 'kim'};
+	// var child = {};
+	// child.__proto__ = parent;
+	// console.log(child.name); // kim
+	
+</script>
+
+
+
+
+
+
+14. prototype1
+<script>
+	// // prototype은 class(설계, 명세)의 메타정보인 것 같다.
+	// // 객체 생성시 prototype은 외부에서 바꿀 수 없는 클래스 고유 요소들, 생성자는 바꿀 수 있는 요소들
+	// function Student(name, age) {
+	// 	this.name = name;
+	// 	this.age = age;
+	// 	this.sayHi = function() {
+	// 		console.log('hi, this is ' + this.name + '. what up?');
+	// 	}
+	// }
+
+	// Student.prototype.gender = 'male';
+
+	// var student = new Student('kim', 20);
+	// var student2 = new Student('lee', 10);
+
+	// var arr = [1, 2, 3];
+	// var arr = new Array(1, 2, 3); // 위를 js에서는 이렇게 해석. js에서는 배열도 object.
+
+	// // Student.prototype; // class 프로토타입 콜은 이렇게
+	// // student.__proto__; // instance 프로토타입 콜은 이렇게
+
+	// // toString() 함수 탐색
+	// // 1. student 탐색 -> 없음
+	// // 2. Student.prototype 탐색 -> 없음
+	// // 3. Object.prototype 탐색 -> 있음
+	// student.toString(); // [object Object] 출력
+</script>
+
+
+
+
+
+
+13. constructor
+<script>
+
+// 	var student = {
+// 		name: 'cho', 
+// 		age: 15,
+// 		sayHi: function() {
+// 			console.log('hi, this is ' + this.name + '. what up?');
+// 		}
+// 	};
+
+// 	function Student(name, age) {
+// 		this.name = name;
+// 		this.age = age;
+// 		this.sayHi = function() {
+// 			console.log('hi, this is ' + this.name + '. what up?');
+// 		}
+// 	}
+
+// 	var student2 = new Student('kim', 20);
+// 	var student3 = new Student('lee', 10);
+
+// 	student.sayHi();
+// 	student2.sayHi();
+// 	student3.sayHi();
+
+// </script>
+
+
+
+
+
+
+// 12. primitive/reference data types
+// <script>
+// 	// //1
+// 	// var name1 = {nickname : 'kim'};
+// 	// var name2 = name1;
+// 	// name1.nickname = 'park';
+// 	// console.log(name2);
+
+// 	// //2
+// 	// var name1 = {nickname : 'kim'};
+// 	// var name2 = {nickname : 'kim'};
+// 	// console.log(name1 == name2);
+// 	// console.log(name1 === name2);
+
+// 	// //3
+// 	// // 함수에 인수를 넣는 건 새로운 그릇을 만들어 그 그릇에 해당 인수의 ref 주소를 담는 것과 같다
+// 	// // parameter는 변수생성+할당(shallow copy)과 같다
+// 	// var name1 = {nickname : 'kim'};
+
+// 	// function change(obj) {
+// 	// 	obj.nickname = 'cho';
+// 	// }
+// 	// function change2(obj) {
+// 	// 	obj = {nickname : 'park'};
+// 	// }
+
+// 	// change2(name1);
+// 	// console.log(name1.nickname); // kim
+
+// 	// change(name1);
+// 	// console.log(name1.nickname); // cho
+// </script>
+
+
+
+
+
+// quiz - spread/rest
+// <script>
+// 	// //1
+// 	// var a = [1, 2, 3];
+// 	// var b = '김밥';
+// 	// var c = [...b, ...a];
+// 	// console.log(c); // '김', '밥', 1, 2, 3
+
+// 	// //2
+// 	// var a = [1, 2, 3];
+// 	// var b = ['you', 'are']
+// 	// var c = function(a, b) {
+// 	// 	console.log([[...a], ...[...b]][1]);
+// 	// }
+// 	// c(a, b); // [1, 2, 3], 'you', 'are'
+
+// 	// //3
+// 	// function func(a = 5, b = a * 2) {
+// 	// 	console.log(a + b); // 3 + 6 = 9
+// 	// 	return 10;
+// 	// }
+// 	// func(3); // 9
+
+// 	// //4
+// 	// function func(a = 5, b = a * 2) {
+// 	// 	console.log(a + b);
+// 	// }
+// 	// func(undefined, undefined); //15
+
+// 	// //5
+// 	// function arr(...rest) {
+// 	// 	return rest;
+// 	// }
+
+// 	// var newArr = arr(1, 2, 3, 4, 5);
+// 	// console.log(newArr);
+
+// 	// //6
+// 	// // Math.max(5, 6, 4, 3);
+// 	// var numbers = [2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5];
+// 	// console.log(Math.max(...numbers)); // spread = 대괄호 제거
+
+// 	// //7
+// 	// // console.log(['b', 'c', 'a'].sort()); // 정렬 함수 예시
+
+// 	// function sort(arr) {
+// 	// 	console.log([...arr].sort()); //['a', 'b', 'e', 'r']
+// 	// 	console.log([...arr].sort().join()); // a, b, e, r
+// 	// 	console.log(...[...arr]); // b e a r
+// 	// 	console.log(...[...arr].sort()); // a b e r
+// 	// }
+
+// 	// sort('bear');
+
+// 	// 8
+// 	// countWords('aacbbb'); // {a: 2, b: 3, c: 1} 식으로 출력해줘야 함
+
+// 	// function countWords(words) {
+// 	// 	var result = {};
+// 	// 	[...words].forEach(function(a) {
+// 	// 		if (result[a] > 0) result[a] += 1;
+// 	// 		else result[a] = 1;
+// 	// 	});
+// 	// 	console.log(result);
+// 	// }
+// </script>
+
+
+
+
+// 10~11. es6-style-function
+// <script>
+// 	// //1
+// 	// function tempFunc() {
+// 	// 	return 10;
+// 	// }
+
+// 	// function add(a, b = 2 * a) {
+// 	// 	console.log(a + b);
+// 	// }
+
+// 	// function add2(a, b = tempFunc()) {
+// 	// 	console.log(a + b);
+// 	// }
+
+// 	// add(1); //3
+// 	// add2(1); //11
+
+// 	// //2
+// 	// // 모든 인수 한꺼번에 다룰 때 'argument' 키워드 사용
+
+// 	// function func(a, b, c) {
+// 	// 	console.log(arguments);
+// 	// 	console.log(...arguments);
+// 	// 	console.log(arguments[0]);
+// 	// 	console.log(arguments[1]);
+// 	// 	console.log(arguments[2]);
+
+// 	// 	console.log('------------');
+
+// 	// 	for (var i = 0; i < arguments.length; i++) {
+// 	// 		console.log(arguments[i]);
+// 	// 	}
+// 	// }
+
+// 	// func(1, 2, 3);
+
+// 	// //3
+// 	// // rest 인수 // 인수 입력 목록 중 가장 마지막에서만 쓸 수 있다
+// 	// // arguments 키워드와 다른 점은 arguments는 모든 인수를 다 담는다는 것. rest 사용시엔 처음에 몇 개 인수는 명시해도 된다.
+// 	// function func(...rest) {
+// 	// 	console.log(rest);
+// 	// }
+// 	// function func2(...restRest) {
+// 	// 	console.log(restRest);
+// 	// }
+// 	// function func3(...param) {
+// 	// 	for (var i = 0; i < param.length; i++) {
+// 	// 		console.log(param[i]);
+// 	// 	}
+// 	// }
+
+	// func(1,2,3,4,5,6,7);
+	// func2(1,2,3,4,5,6,7);
+	// func3(1,2,3,4,5,6,7);
+
+</script>
+
+
+
+
+
+9. spread operator2
+<script>
+	// //1
+	// function add(a, b, c) {
+	// 	console.log(a + b + c);
+	// }
+
+	// var arr = [10, 20, 30];
+	// add.apply(undefined, arr); // old way
+	// add(...arr); // new way
+
+	// //2
+	// var person = {
+	// 	hi : function() {
+	// 		console.log('hey ' + this.name);
+	// 	}
+	// }
+
+	// var person2 = {
+	// 	name : '손흥민'
+	// }
+
+	// person.hi();
+	// person.hi.apply(person2); // person2 object를 옮겨와(상속) 실행 요청
+
+	// person.hi.apply(person2, [arg1, arg2]); //person.hi(arg1, arg2)
+	// person.hi.call(person2, arg1, arg2); //person.hi(arg1, arg2) // 위와 동일기능. 인수 할당시 배열에 넣는지 아닌지만 차이
+
+</script>
+
+
+
+
+8. spread operator
+<script>
+	// //1
+	// var arr = ['hi', 'hello'];
+	// console.log(arr);
+	// console.log(...arr);
+
+	// var str = 'hello';
+	// console.log(str);
+	// console.log(...str);
+
+	// var a = [1, 2, 3];
+	// var b = [4, 5];
+
+	// var c = [...a, ...b];
+	// console.log(...c);
+
+	// //2
+	// var a = [1, 2, 3];
+	// var b = a; // call by reference
+	// b[2] = 100;
+	// console.log(a);
+	// console.log(b);
+
+	// var x = [1, 2, 3];
+	// var y = [...x]; // call by value
+	// x[2] = 100;
+	// console.log(x);
+	// console.log(y);
+
+	// //3
+	// var o1 = {a : 1, b : 2};
+	// var o2 = {...o1, c : 3};
+
+	// // console.log(o1); // error
+	// // console.log(o2); // error
+	// console.log({...o1});
+	// console.log({...o2});
+
+	// var z1 = {a: 1, b: 2, 'b': 3};
+	// var z2 = z1;
+	// // z1[a] = 100; // error(a not defined)
+	// z1['a'] = 100;
+	// z1[97] = 97; // ascii 97 = a // a != 'a'
+	// z1['97'] = 970; // 위와 같게 본다. z[97] = z['97'] // key로 순수 decimal은 불가?
+	// z1['b'] = 300;
+	// console.log(z1);
+	// console.log(z2);
+
+	// // 4
+	// var o1 = {a: 1, b: 2};
+	// var o2 = {a: 9, ...o1};
+	// var o3 = {...o1, a: 3};
+
+	// console.log(o2);
+	// console.log(o3);
+
+</script>
+
+
+
+6~7. template literals(strings)
+<script>
+	// // backquote pros
+	// // 1. can use enter key
+	// // 2. easier to insert variables in the middle of string sentence
+	// var name = '손흥민';
+	// var string1 = 'hi my name is ' + name + ', what up?';
+	// var string2 = `hi my name is ${name}, what up?`;
+	// var template = `<div>
+	// ${name}
+	// </div>`
+
+	// console.log(string1);
+	// console.log(string2);
+	// console.log(template);
+
+	// // backquote string + function
+	// // tagged literal
+	// var variable1 = '손흥민';
+	// var variable2 = '이강인';
+
+	// function func(strings, variables1, variables2) {
+	// 	// console.log(variables1);
+	// 	// console.log(variables2);
+	// 	// console.log(strings);
+	// 	console.log(strings[2] + variables2 + strings[0] + variables1 + strings[1]);
+	// }
+
+	// func`hi, i am ${variable1}, what up? this is my friend, ${variable2}.`;
+
+	// // quiz1: template literals1
+	// var pants = 20;
+	// var socks = 100;
+	// `pants${pants} socks${socks}`; // pants와 socks의 개수가 뒤바뀌었을 경우
+
+	// function func(strings, var1, var2) {
+	// 	console.log(strings[0] + var2 + strings[1] + var1 + strings[2]);
+	// }
+
+	// func`pants${pants} socks${socks}`
+
+	// // quiz2: template literals2
+	// // pants가 0이면 '바지 안팔아요 양말 100' 문자로 변환하기
+	// var pants = 0;
+	// var socks = 100;
+
+	// function func(strings, ...vars) {
+	// 	if (vars[0] === 0) {
+	// 		console.log(`${strings[0]} 안팔아요 ${strings[1]} ${vars[1]}`);
+	// 	} else {
+	// 		console.log(strings[0] + vars[0] + ' ' + strings[1] + vars[1])
+	// 	}
+	// }
+
+	// func`pants${pants}socks${socks}`;
+
+
+</script>
+
+quiz
+<script>
+	// // 1
+	// func();
+
+	// function func() {
+	// 	console.log(hi);
+	// 	let hi = 'hello world'; // error // uninitialized
+	// 	// var hi = 'hello world'; // undefined 할당
+	// }
+
+	// // 2
+	// // func();
+
+	// var func = function() {
+	// 	var hi = 'hello world';
+	// 	console.log(hi);
+	// }
+
+	// func();
+
+	// // 3
+	// let a = 1;
+	// var func = function() {
+	// 	a = 2;
+	// }
+	// console.log(a); // 1
+	// func();
+	// console.log(a); // 2
+
+	// // 4
+	// let a = 1;
+	// var b = 2;
+	// window.a = 10;
+	// window.b = 20;
+
+	// console.log(a + b);
+	// console.log(this.a + this.b);
+
+	// 5-1
+	// setTimeout(function() {console.log(1)}, 1000);
+	// setTimeout(function() {console.log(2)}, 2000);
+	// setTimeout(function() {console.log(3)}, 3000);
+	// setTimeout(function() {console.log(4)}, 4000);
+	// setTimeout(function() {console.log(5)}, 5000);
+
+	// // 5-2
+	// for (var i = 1; i <= 5; i++) {
+	// 	setTimeout(function() {console.log(i)}, i * 1000);
+	// }
+
+	// for (let i = 1; i <= 5; i++) {
+	// 	setTimeout(function() {console.log(i)}, i * 1000);
+	// }
+
+	// console.log('howdy');
+
+	// // 6
+
+	// var buttons = document.querySelectorAll('button');
+	// var modals = document.querySelectorAll('div');
+
+	// // buttons[0].addEventListener('click', function() {
+	// // 	modals[0].style.display = 'block'
+	// // });
+
+	// for (let i = 0; i < 3; i++) {
+	// 	buttons[i].addEventListener('click', function() {
+	// 		modals[i].style.display = 'block'
+	// 	});
+	// }
+</script>
+
+
+변수 hoisting
+<script>
+	// // 1
+	// // hoisting - 변수의 선언을 변수 범위 맨 위로 끌고 오는 현상. 변수를 만나면 선언부를 강제로 맨 위로 끌어올림.
+	// // 함수 선언도 hoisting
+
+	// console.log(age);
+
+	// var age = 30;
+
+	// console.log(age);
+
+	// // 2
+	// // window로 전역 변수 만들기
+	// // window는 js 기본 함수를 담은 오브젝트
+
+	// let name = 'egg';
+	// window.name = 'chicken';
+	// window.funcfunc = () => console.log('funcfunc!!');
+
+	// console.log(this.name);
+	// console.log(name);
+	// funcfunc();
+
+	// // 3
+	// if (true) {
+	// 	let a = 1;
+	// 	// let a = 2; // error
+	// 	if (true) {
+	// 		let a = 2;
+	// 	}
+	// 	console.log(a);
+	// }
+</script>
+
+변수 기본
+<script>
+	// // 'use strict'
+
+	// // 1
+	// // var 재선언O, 재할당O, 범위 function
+	// // let 재선언X, 재할당O, 범위 {} 중괄호 안
+	// // const 재선언X, 재할당X, 범위 {} 중괄호 안
+
+	// var name = 'kim';
+	// // let name = 'kim'; // error
+	// name = 'lee';
+	// console.log(name);
+
+	// let name2 = 'john';
+	// name2 = 'bae';
+	// console.log(name2);
+
+	// const person = { name : 'kim'};
+	// person.name = 'choi'; // ok
+	// console.log(person.name);
+
+	// Object.freeze(person); // 변경해도 바뀌지 않는다.
+	// person.name = 'park'; // fail // 'use strict' 사용시 에러 반환.
+	// console.log(person.name);
+
+	// // 2
+	// function func() {
+	// 	var name3 = 'kim';
+	// }
+	// // console.log(name); // error
+
+	// if (true) {
+	// 	let name4 = 'park';
+	// }
+	// // console.log(name3); // error
+
+	// for (let i = 0; i < 10; i++) {
+	// 	console.log(i);
+	// }
+</script>
+
+함수 기본
+<script>
+	// var 함수 = a => console.log(a + 10);
+
+	// 함수(5);
+
+	// [1, 2, 3, 4].forEach(function(a) {
+	// 	console.log(a)
+	// })
+
+	// [1, 2, 3, 4].forEach(a => console.log("ayo iz mofo weyowe piss, " + a));
+
+	// document.getElementById('버튼')
+	// .addEventListener('click', (e) => console.log(e.currentTarget));
+
+	// var 오브젝트 = {
+	// 	// 함수 : () => {
+	// 	// 	return this;
+	// 	// }
+	// 	함수 : function() {
+	// 		return this;
+	// 	}
+	// }
+	// 오브젝트.함수();
+</script>
+
+
+
+
+
