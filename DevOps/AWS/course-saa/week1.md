@@ -57,19 +57,78 @@
 
 
 
+---
+
 <br><br><br>
 
 # IAM 보안 관리하기
 
+## IAM 비밀번호 정책 알아보기
+- 최소 비밀번호 길이 정하기
+- 특정 문자열 형식 포함하기
+- IAM 사용자가 자신의 비밀번호를 바꿀 수 있도록 허용하기
+- 특정 주기마다 비밀번호 변경하도록 권장하기
+- 비밀번호 재사용 금지
 
 
+## IAM MFA(multi factor authentication)
+- 사용자는 AWS 계정에 접속해서 설정을 변경하거나 리소스를 삭제할 수 있다.
+- 그렇기 때문에 IAM 사용자 또는 루트 계정에 대한 보안을 강화할 필요가 있다.
+- MFA를 적용하면 더 강력한 보안을 유지할 수 있다.
+
+### 주로 사용하는 MFA
+- 가상 MFA device
+  - MS authenticator
+  - google authenticator
+  - suthy 등
+- U2F 키
+- 하드웨어 기반 MFA 기기
 
 
+## IAM 서비스 롤
+- aws service 내부에서 aws 리소스를 접근해야 할 수 있습니다.
+  - eg. EC2 -> RDS, EC2 -> S3...
+- 이런 경우 aws service에 iam 롤을 적용할 수 있습니다.
+- 예시
+  - 'aws 내부에서 다른 리소스에 접근을 한다, 그리고 이 상황에서 그것이 제한되어야 한다'에 가장 포커스가 맞춰져 있다.
+  - EC2 인스턴스 롤
+  - 람다 함수 롤
+  - ...대부분의 서비스에는 롤을 적용할 수 있습니다.
+  - 최소 권한의 원칙을 지키는 것을 추천
+
+## AWS 접근 방법 알아보기
+- AWS management console
+  - 비번 + MFA로 보안 유지
+- AWS CLI
+  - access key를 기반으로 보안 유지
+- AWS SDK
+  - access key 또는 IAM assign(내부 리소스간)
+- access key는 console에서 생성 가능하다.
+  - 비번과 같이 외부로 공유되어지면 안된다.
+- 사용자는 각자 access key를 관리할 수 있다.
+- access key는 access key id와 secret access key로 구성되어 있다.
 
 
+## IAM 보안 툴
+- IAM 보안 보고서(confidential report)
+  - account(계정) 범위
+  - 모든 계정 내부의 사용자의 상태와 민감 정보의 상태를 보여준다.
+- IAM access advisor
+  - 사용자 단위
+  - 사용자에게 주어진 서비스 권한 및 접속 기록을 보여준다.
+  - 정책이 적절한지 체크하는 용도로 사용한다.
+  - 현재 사용자에게 주어진 권한 내에서 불필요한 것들이 있는지 없는지 솎아내는 용도로 체크하게 된다.
 
+  ## IAM 정리
+  - 사용자: 실제 사용자와 매핑되며 AWS console에 비밀번호로 접속할 수 있다.
+  - 그룹: 사용자를 묶는 용도로 사용
+  - 정책: json 스타일로 작성. 사용자 또는 그룹에게 적용 가능. 리소스별 접근과 할 수 있는 역할 규정.
+  - 롤: 리소스가 다른 리소스에 접근할 수 있도록 지정
+  - 보안방식: MFA + 비밀번호 정책
+  - access key: 어플리케이션 또는 CLI에서 aws를 접근할 수 있도록 제공
+  - 이력관리: credential report와 access advisor 활용 
 
-
+---
 
 <br><br><br>
 
