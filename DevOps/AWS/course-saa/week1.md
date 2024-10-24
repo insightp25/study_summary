@@ -128,52 +128,101 @@
   - access key: 어플리케이션 또는 CLI에서 aws를 접근할 수 있도록 제공
   - 이력관리: credential report와 access advisor 활용 
 
+
+
 ---
 
 <br><br><br>
 
 # IAM 콘솔 사용자 생성
 
+(실습)
 
 
 
 
-
- 
+---
 
 <br><br><br>
 
 # IAM CLI 접근
 
+aws configure
+aws iam list-users
+
+cd $HOME/.aws
+vi credentials
+vi config
 
 
 
-
-
-
-
+---
 
 <br><br><br>
 
 # IAM 정책 생성
 
+(실습)
 
 
 
-
-
- 
+ ---
 
 <br><br><br>
 
 # EC2와 인스턴스 타입
 
+## EC2 소개
+- ec2는 AWS에서 제공하는 가장 기본적인 인프라 서비스
+- elastic compute cloud의 약어
+- ec2를 생성할 때 기본적으로 4가지 요소들이 함께하게 된다.
+  - EC2 가상 머신
+  - EBS(elastic block store)/EFS(elastic file system) - 가상 머신 내에 데이터를 저장하는 스토리지
+  - ELB(elastic load balancer) - 머신간 부하 분산
+  - AutoSailing 그룹 - 서비스의 스케일링 조정
+
+## EC2의 장점
+- 손쉽게 대량의 인스턴스 실행 가능
+- 인스턴스 내부의 모든 요소에 대해 root 권한을 갖는다.
+- 인스턴스 유형을 선택하거나, os를 선택하는 등 유연한 구성 제공
+- 빠르고 쉽게 교체 가능하고 고가용성을 지원
+- VPC/security group 등을 통해 보안 확보 가능
+- 필요한 상황에 맞게 저렴한 비용으로 사용 가능
+  - (적절하게 설정하지 않는다면, 오히려 많은 비용 발생 가능)
+
+## EC2 User Data 알아보기
+- EC2 인스턴스가 최초로 실행될때 User Data를 통해 스크립트를 실행할 수 있습니다(Bootstrapping).
+- User data 에 입력된 스크립트는 인스턴스가 최초로 시작될때만 수행됩니다.
+- User data 는 해당 인스턴스에 root 권한을 가지고 수행합니다.
+  - root 권한 -> 모든 동작이 수행 가능하므로 주의하여 사용!
+
+## EC2 Instance Type 알아보기
+- EC2는 다양한 목적과 필요한 용량에 맞춰서 제공할 수 있는 패밀리와 타입을 제공합니다.
+- 인스턴스 타입의 구분은 C7g.medium 와 같이 패밀리(C for computing) + 세대(7) + proccesor/특징/없음(g) + 크기(medium) 로 구분되어집니다.
+  - 범용, 컴퓨팅 최적화, 메모리 최적화, 가속화 컴퓨팅, 스토리지 최적화, HPC 최적화 등...
+- https://aws.amazon.com/ko/ec2/instance-types/ 페이지에서 인스턴스 타입별 상세 내용을 확인 할 수 있습니다.
+
+## EC2 Instance Type 범용(general purpose)
+- 다양한 종류의 워크로드를 지원하는데 특화
+- 네트워크/메모리/연산이 고르게 분배
+- t2.micro의 경우 aws free tier에서 사용 가능
+  - (앞으로 진행하게 되는 모든 ec2 실습은 해당 인스턴스 타입을 이용해 진행)
+  
+## EC2 Instance Type 컴퓨팅 최적화(compute optimized)
+- 고성능 프로세서가 필요한 연산력 특화된 작업을 수행하는데 용이
+  - 배치 작업
+  - 미디어 파일의 인코딩
+  - 고성능이 필요한 웹서버
+  - 게이밍 서버
 
 
 
 
 
 
+
+
+---
 
 <br><br><br>
 
