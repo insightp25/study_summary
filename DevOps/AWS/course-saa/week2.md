@@ -333,9 +333,17 @@ CLB, ALB와 달리 layer4, layer3에서 동작
 
 # 2-7. ALB 사용 실습
 
+ssh -i sparta-lecture.pem ec2-user@{퍼블릭IP}
+```
+sudo su
+yum install httpd
+cd /var/www/html
+echo "<h1>alb 테스트 1번</h1>" > index.html
+systemctl start httpd
+```
 
-
-
+- aws 콘솔 -> EC2 -> 로드밸런싱 대상 그룹 생성  -> 로드 밸런서 생성
+- 기존에 이미 사용중이라 불가피한 상황이 아니라면 CLB는 절대 사용하지 않길 추천
 
 
 
@@ -345,7 +353,19 @@ CLB, ALB와 달리 layer4, layer3에서 동작
 
 # 2-8. Auto Scaling Group 사용 실습
 
-
+- auto scaling group 생성 -> 시작 템플릿 생성
+- (시작 템플릿)사용자 데이터 입력
+```
+#!/bin/bash
+yum update -y
+yum install -y httpd
+systemctl start httpd
+systemctl enable httpd
+TOKEN=`curl-X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds:21600"` && INSTANCE_ID=`curl -H "X-aws-ec2-metadata-token:$TOKEN" -v http://169.254.169.254/latest/meta-data/instance-id`
+echo "<h1>인스턴스ID:${INSTANCE_ID} 에 접속했어요 </h1>">
+/var/www/html/index.html
+```
+- 시작 템플릿 생성후 auto scaling 그룹 생성
 
 
 
