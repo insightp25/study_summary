@@ -8,6 +8,7 @@ function App() {
   let post = '강남 우동 맛집';
   let [postTitle, setPostTitle] = useState(["남자 코트 추천", "여자 코트 추천", "아이템 추천"]);
   let [like, setLike] = useState(0);
+  let [modal, setModal] = useState(false);
 
   function test() {
     console.log('test');
@@ -39,7 +40,7 @@ function App() {
         <p>2월 17일 발행</p>
       </div>
       <div className="list">
-        <h4>{postTitle[2]}</h4>
+        <h4 onClick={() => { setModal(!modal)}}>{postTitle[2]}</h4>
         <p>2월 17일 발행</p>
       </div>
 
@@ -49,7 +50,10 @@ function App() {
         setPostTitle(copy)
       }}>첫 번째 글 제목 변경</button>
 
-      <Modal />
+
+      {
+        modal === true ? <Modal /> : null
+      }
 
     </div>
   )
