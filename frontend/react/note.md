@@ -170,10 +170,39 @@ npm run dev
 
 </br></br>
 
-# 
+# array, object state 변경하는 법
+- (참고)array/object 다룰 때 원본은 보존하는 게 좋다.
+
+## state 변경함수의 원리와 특징
+- 기존state == 신규state의 경우 변경 안해줌(일종의 자원절약 차원)
+- array/object(reference 데이터타입) 담은 변수엔 화살표(RAM 주소)만 저장
 
 
+```jsx
+// state 변경 안됨.
+let [postTitle, setPostTitle] = useState(["남자 코트 추천", "여자 코트 추천", "아이템 추천"]);
 
+return (
+  <button onClick={() => {
+      let copy = postTitle;
+      copy[0] = "남자 구두 추천";
+      setPostTitle(copy)
+    }}>첫 번째 글 제목 변경</button> // copy의 값(주소) 자체가 안변했기 때문에 상태도 변경되지 않고 html이 렌더링되지 않는다. postTitle == copy
+)
+```
+```jsx
+let [postTitle, setPostTitle] = useState(["남자 코트 추천", "여자 코트 추천", "아이템 추천"]);
+
+return (
+  <button onClick={() => {
+      let copy = [...postTitle]; // ...괄호를 벗기는 기능. 벗긴 후에 다시 새로운 배열에 값들을 넣어 참조값이 다른 변수를 만듬.
+      copy[0] = "남자 구두 추천";
+      setPostTitle(copy) // postTitle != copy. 다시 렌더링 된다.
+    }}>첫 번째 글 제목 변경</button>
+)
+```
+- `...`(스프레드 연산자): array/object의 괄호를 벗기는 기능
+- state의 값이 array/object일 경우 항상 shallow copy를 하는 식으로 변경해야 한다.
 
 
 
