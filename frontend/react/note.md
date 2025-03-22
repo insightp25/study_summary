@@ -1,7 +1,8 @@
 # 1트
 
 npx create-react-app blog
-
+npm run dev
+npm install(vite 등이 설치 안됐거나 npm이 최신이 아닐 시)
 
 ### jsx
 
@@ -70,7 +71,7 @@ cd {프로젝트명}
 npm install  
 npm run dev  
 
-## 01
+### 01
 - .js와 .jsx는 큰 차이 없음
 - npm: js 라이브러리 관리 도구(패키지 매니저)
 - vite: 리액트, 뷰, 스벨트 등 프로젝트 생성 도와줌. 정확히는 "빌드/번들링 툴."
@@ -82,7 +83,7 @@ npm run dev
 - package.json: 설치한 라이브러리 기록용 파일. npm 명령어 설정도 가능("scrips").
 - node_modules: 설치한 라이브러리 보관해주는 곳
 
-## 02
+### 02
 - css 파일 내용 모두 지우고 index.css에 body {margin: 0;}, div{box-sizing: border-box;} 설정해 깔끔하게 시작.
 - app.js 파일 App() 함수 내용 모두 비우고 시작.
 
@@ -178,7 +179,7 @@ npm run dev
 # array, object state 변경하는 법
 - (참고)array/object 다룰 때 원본은 보존하는 게 좋다.
 
-## state 변경함수의 원리와 특징
+### state 변경함수의 원리와 특징
 - 기존state == 신규state의 경우 변경 안해줌(일종의 자원절약 차원)
 - array/object(reference 데이터타입)를 담은 변수엔 화살표(RAM 주소)만 저장
 
@@ -216,11 +217,36 @@ return (
 
 </br></br></br>
 
-# 
+# component
 
+- html 특: 더러움 -> 리액트 component로 축약
 
+컴포넌트 만드는 법
+1. function 만들고(다른 function 바깥에+영어대문자)
+2. return() 안에 html 담기(하나의 html 태그로 시작해서 끝나야)
+3. <함수명></함수명> 쓰기
 
+어떤 걸 컴포넌트로 만들면 좋은가
+1. 반복적인 html 축약할 때
+2. 큰 페이지들
+3. 자주 변경되는 UI들
 
+- 컴포넌트의 단점: state 가져다 쓸 때 문제 생김(state는 보통 범위가 한 함수에 속하는데, A 함수에 있던 state변수는 B 함수에 마음대로 가져다 쓸 수 없음)
+
+- (참고1)fragment: `return()` 안에 html 병렬기입하려면 의미없는 `<div>` 대신 `<></>` 사용 가능
+- (참고2)`<함수명></함수명>`, `<함수명/>` 둘 다 가능
+- (참고3)컴포넌트 만드는 다양한 문법들
+  ```jsx
+  const Modal = () => { // 1
+    return(...);
+  }
+  let Modal = () => { // 2
+    return(...);
+  }
+  function Modal() { // 3
+    return(...);
+  }
+  ```
 
 
 

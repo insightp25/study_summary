@@ -15,6 +15,9 @@ function App() {
 
   return (
     <div className="App">
+
+
+      
       <div className="black-nav">
         <h4>THIS IS A MOCK BLOG</h4>
       </div>
@@ -45,6 +48,19 @@ function App() {
         copy[0] = "남자 구두 추천";
         setPostTitle(copy)
       }}>첫 번째 글 제목 변경</button>
+
+      <Modal />
+
+    </div>
+  )
+}
+
+function Modal() {
+  return (
+    <div className="modal">
+      <h4>Title</h4>
+      <p>Date</p>
+      <p>Content</p>
     </div>
   )
 }
