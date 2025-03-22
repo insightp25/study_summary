@@ -117,8 +117,30 @@ npm run dev
 
 </br>
 
-### 
+# 중요한 데이터는 변수말고 state에 담습니다
 
+- jsx에선 변수 외에 state에도 자료를 보관할 수 있다.
+  1. `import {useState} from 'react';`
+  2. useState(보관할 자료)
+  3. let [이름1, 이름2]  
+  ```jsx
+  let [a, b] = useState('남자 코트 추천'); // ['남자 코트 추천', 함수]
+  // a = 변수명
+  // b = state 변경을 도와주는 함수
+  ```
+    - (참고) `[a, c]`: js에서 destructuring이라는 문법. array 안에 있던 자료들을 각각 변수로 빼주는 문법.
+      ```jsx
+      let num = [100, 200];
+      // let a = num[0]; // 100
+      // let b = num[1]; // 200
+      let [a, c] = [100, 200];
+      ```
+- state는 갑자기 변경되면 해당 state를 쓰고 있는 html 전체가 자동 재렌더링 됨.
+- state 사용처: 데이터 변동시 자동으로 html에 반영되게 만들고 싶으면 state 사용.
+- 자주 변경될거 같은 html 부분은 state로 만들어 놓는다.
+- (참고)jsx에서 모든 html 코드는 return() 안에 작성한다.
+  - 무조건 하나의 태그(`<div></div>` 등)로 시작해 하나의 태그로 끝나야 한다. 병렬로 태그 2개 이상 기입 금지.
+ 
 
 
 
