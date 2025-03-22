@@ -6,7 +6,12 @@ import './App.css'
 function App() {
 
   let post = '강남 우동 맛집';
-  let [post_title, b] = useState(["남자 코트 추천", "여자 코트 추천", "아이템 추천"]);
+  let [post_title, setPostTitle] = useState(["남자 코트 추천", "여자 코트 추천", "아이템 추천"]);
+  let [like, setLike] = useState(0);
+
+  function test() {
+    console.log('test');
+  }
 
   return (
     <div className="App">
@@ -15,7 +20,7 @@ function App() {
       </div>
       <h4>ARTICLES</h4>
       <div className="list">
-        <h4>{post_title[0]}</h4>
+        <h4>{post_title[0]} <span onClick={()=>{setLike(like + 1)}}>👍</span> {like}</h4>
         <p>2월 17일 발행</p>
       </div>
       <div className="list">
