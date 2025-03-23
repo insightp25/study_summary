@@ -7,6 +7,7 @@ function App() {
 
   let [postTitle, setPostTitle] = useState(["남자 코트 추천", "도서 추천", "영화 추천"]);
   let [likes, setLikes] = useState([0, 0, 0]);
+  let [titleIndex, setTitleIndex] = useState(0);
 
   // const initialPosts = [
   //   { id: 1, title: "남자 코트 추천", date: "1월 17일 발행", likes: 0 },
@@ -28,7 +29,7 @@ function App() {
         postTitle.map((title, i) => {
           return (
             <div className="list" key={i}>
-              <h4 onClick={()=>{setModal(!modal)}}>{title} <span onClick={()=>{
+              <h4 onClick={()=>{setModal(true); setTitleIndex(i)}}> {title} <span onClick={()=>{
                 let copy = [...likes];
                 copy[i] = copy[i] + 1;
                 setLikes(copy);
@@ -52,7 +53,7 @@ function App() {
       }}>첫 번째 글 제목 변경</button>
 
       {
-        modal === true ? <Modal postTitle={postTitle} setPostTitle={setPostTitle} color="skyblue"/> : null
+        modal === true ? <Modal postTitle={postTitle} titleIndex={titleIndex} setPostTitle={setPostTitle} color="skyblue"/> : null
       }
 
 
@@ -97,7 +98,7 @@ function App() {
 function Modal(props) {
   return (
     <div className="modal" style={{background: props.color}}>
-      <h4>{props.postTitle[0]}</h4>
+      <h4>{props.postTitle[props.titleIndex]}</h4>
       <p>Date</p>
       <p>Content</p>
       <button onClick={()=>{
