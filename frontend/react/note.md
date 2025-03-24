@@ -412,14 +412,41 @@ constructor, super, render 무조건 채워넣는다.
 // 기본 세팅
 class Modal2 extends React.Component {
   constructor() {
-    super()
+    super();
   }
   render() {
-
+    return (
+      <div>
+        {/*...*/}
+      </div>
+    );
   }
 }
 ```  
 
+class 컴포넌트에서 state 만드려면:
+
+```jsx
+class Modal2 extends React.Component {
+  constructor(props) { // props 사용시
+    super(props); // props 사용시
+    this.state = { // state 만들기
+      name: "kim",
+      age: 20
+    }
+  }
+  render() {
+    return (
+      <div>
+        {this.state.name} {this.state.age} {/*{this.props}*/}
+        <button onClick={() => {
+          this.setState({age: 21});
+        }}>나이 변경</button>
+      </div>
+    );
+  }
+}
+```  
 
 
 </br></br></br>

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './App.css'
-
+import React from 'react'
 function App() {
   
   let [modal, setModal] = useState(false);
@@ -109,6 +109,7 @@ function App() {
         setPosts(copy);
       }}>첫 번째 글 제목 변경</button> */}
 
+      <Modal2 />
     </div>
   )
 }
@@ -126,6 +127,27 @@ function Modal(props) {
       }}>글 수정</button>
     </div>
   )
+}
+
+
+class Modal2 extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { // state 만들기
+      name: "kim",
+      age: 20
+    }
+  }
+  render() {
+    return (
+      <div>
+        {this.state.name} {this.state.age} {/*{this.props}*/}
+        <button onClick={() => {
+          this.setState({age: 21});
+        }}>나이 변경</button>
+      </div>
+    );
+  }
 }
 
 export default App
