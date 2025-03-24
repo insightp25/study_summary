@@ -5,9 +5,10 @@ function App() {
   
   let [modal, setModal] = useState(false);
 
-  let [postTitle, setPostTitle] = useState(["남자 코트 추천", "도서 추천", "영화 추천"]);
+  let [postTitle, setPostTitle] = useState(["남자 코트 추천", "영화 추천", "도서 추천"]);
   let [likes, setLikes] = useState([0, 0, 0]);
   let [titleIndex, setTitleIndex] = useState(0);
+  let [inputValue, setInputValue] = useState('');
 
   // const initialPosts = [
   //   { id: 1, title: "남자 코트 추천", date: "1월 17일 발행", likes: 0 },
@@ -29,12 +30,18 @@ function App() {
         postTitle.map((title, i) => {
           return (
             <div className="list" key={i}>
-              <h4 onClick={()=>{setModal(true); setTitleIndex(i)}}> {title} <span onClick={()=>{
+              <h4 onClick={()=>{setModal(true); setTitleIndex(i)}}> {title} <span onClick={(e)=>{
+                e.stopPropagation();
                 let copy = [...likes];
                 copy[i] = copy[i] + 1;
                 setLikes(copy);
               }}>👍</span> {likes[i]} </h4>
               <p>2월 17일 발행</p>
+              <button onClick={() => {
+                let copy = [...postTitle];
+                copy.splice(i, 1);
+                setPostTitle(copy);
+              }}>삭제</button>
             </div>
           );
         })
@@ -48,13 +55,24 @@ function App() {
 
       <button onClick={() => {
         let copy = [...postTitle];
-        copy[0] = "남자 구두 추천";
+        copy[0] = "여자 코트 추천";
         setPostTitle(copy)
       }}>첫 번째 글 제목 변경</button>
 
       {
         modal === true ? <Modal postTitle={postTitle} titleIndex={titleIndex} setPostTitle={setPostTitle} color="skyblue"/> : null
       }
+
+      <input onChange={(e) => {setInputValue(e.target.value);}}></input>
+
+      <button onClick={() => {
+        let copy = [...postTitle];
+        let copyLikes = [...likes];
+        copy.push(inputValue);
+        copyLikes.push(0);
+        setPostTitle(copy);
+        setLikes(copyLikes);
+      }}>글 추가</button>
 
 
 
