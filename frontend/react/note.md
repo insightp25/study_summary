@@ -326,21 +326,21 @@ return (
 
 # input 1 : 사용자가 입력한 글 다루기
 
-<input></input>  
+`<input></input> `
 
-javascript에서는 태그를 연 후 안닫아도 되긴 됐지만 react에서는 반드시 닫거나 <input /> 등 꼭 닫도록 작성해야한다.  
+javascript에서는 태그를 연 후 안닫아도 되긴 됐지만 react에서는 반드시 닫거나 `<input />` 등 꼭 닫도록 작성해야한다.  
 
 input에 넣을 수 있는 요소들: text, range, checkbox...  
 
-<select></select>  
+`<select></select>`  
 
-<textarea>  
+`<textarea>`  
 
-<input>에 뭔가 입력시 코드실행하고 싶으면: onChange/onInput  
+`<input>`에 뭔가 입력시 코드실행하고 싶으면: onChange/onInput  
 
 이벤트핸들러는 매우 많다(30개 가량...암기보다 필요시 검색해서 쓸 것)  
 
-onClick={}, conChange={}, onInput={}, onMouseOver={}, onScroll={}...  
+`onClick={}`, `conChange={}`, `onInput={}`, `onMouseOver={}`, `onScroll={}`...  
 
 반면, 암기할 것:
 - state 만드는 법
