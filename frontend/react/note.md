@@ -326,21 +326,21 @@ return (
 
 # input 1 : 사용자가 입력한 글 다루기
 
-<input></input>
+<input></input>  
 
-javascript에서는 태그를 연 후 안닫아도 되긴 됐지만 react에서는 반드시 닫거나 <input /> 등 꼭 닫도록 작성해야한다.
+javascript에서는 태그를 연 후 안닫아도 되긴 됐지만 react에서는 반드시 닫거나 <input /> 등 꼭 닫도록 작성해야한다.  
 
-input에 넣을 수 있는 요소들: text, range, checkbox...
+input에 넣을 수 있는 요소들: text, range, checkbox...  
 
-<select></select>
+<select></select>  
 
-<textarea>
+<textarea>  
 
-<input>에 뭔가 입력시 코드실행하고 싶으면: onChange/onInput
+<input>에 뭔가 입력시 코드실행하고 싶으면: onChange/onInput  
 
-이벤트핸들러는 매우 많다(30개 가량...암기보다 필요시 검색해서 쓸 것)
+이벤트핸들러는 매우 많다(30개 가량...암기보다 필요시 검색해서 쓸 것)  
 
-onClick={}, conChange={}, onInput={}, onMouseOver={}, onScroll={}...
+onClick={}, conChange={}, onInput={}, onMouseOver={}, onScroll={}...  
 
 반면, 암기할 것:
 - state 만드는 법
@@ -348,15 +348,15 @@ onClick={}, conChange={}, onInput={}, onMouseOver={}, onScroll={}...
 - component 만드는 법
 - UI 만드는 step
 
-...
+...  
 
 ```jsx
 `<input onChange={(e) => { e.target.value }}>`
 // `target`: 이벤트 발생한 html 태그
 // `target.value`: 이벤트 발생한 html 태그에 입력한 값
-```
+```  
 
-클릭 이벤트는 상위 html로 퍼진다(이벤트 버블링). 
+클릭 이벤트는 상위 html로 퍼진다(이벤트 버블링).  
 
 ```jsx
 // 이벤트 버블링 발생
@@ -369,9 +369,9 @@ onClick={}, conChange={}, onInput={}, onMouseOver={}, onScroll={}...
   }}>👍</span> {likes[i]} </h4>
   <p>2월 17일 발행</p>
 </div>
-```
+```  
 
-상위 html로 퍼지는 이벤트버블링을 막으려면 `e.stopPropagation()`
+상위 html로 퍼지는 이벤트버블링을 막으려면 `e.stopPropagation()`  
 
 ```jsx
 // 이벤트 버블링 방지
@@ -384,15 +384,15 @@ onClick={}, conChange={}, onInput={}, onMouseOver={}, onScroll={}...
   }}>👍</span> {likes[i]} </h4>
   <p>2월 17일 발행</p>
 </div>
-```
+```  
 
-<input>에 입력한 값 저장하려면 보통 변수/state((e) => { setInputValue(e.target.value) })으로 저장해둠.
+<input>에 입력한 값 저장하려면 보통 변수/state((e) => { setInputValue(e.target.value) })으로 저장해둠.  
 
 ```jsx
 <input onChange={(e) => {setInputValue(e.target.value);
   console.log(inputValue);
 }}></input>
-```
+```  
 
 - (정보)위 코드 실행시 입력하면 바로 console 창에 입력한 값이 표시되지 않다가 다음 입력시 이전 입력했던 값이 나오는데, 이유는 state 등에 저장하는 방식은 시간이 오래걸리는 작업이므로 해당 state를 변경하는 작업을 비동기로 처리하고 바로 그 다음 라인인 `console.log(inputValue);`로 넘어가기 때문이다.
 
@@ -404,9 +404,21 @@ onClick={}, conChange={}, onInput={}, onMouseOver={}, onScroll={}...
 
 </br></br></br>
 
-# 
+# class를 이용한 옛날 React 문법
 
+constructor, super, render 무조건 채워넣는다.  
 
+```jsx
+// 기본 세팅
+class Modal2 extends React.Component {
+  constructor() {
+    super()
+  }
+  render() {
+
+  }
+}
+```  
 
 
 
