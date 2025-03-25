@@ -468,13 +468,28 @@ react bootstrap 사이트 접속 -> 부트스트랩 설치 -> css 스크립트 �
 
 (정보)이름이 대문자로 시작하면 모두 컴포넌트
 
+App.jsx 등 파일에서 bootstrap 문서 코드스니펫의 import문 내용을 직접 import 하거나 index.html에 태그 삽입
 
 
 </br></br></br>
 
 # 이미지 넣는 법 & public 폴더 이용하기
 
-css파일에서 src 안의 이미지 넣을 땐 ./이미지경로
+- css파일에서 src 안의 이미지 넣을 땐 ./이미지경로
+- 혹은 html 파일에선 import부터 하고 필요한 곳에서 사용(eg. `import bg(작명) from './bg.png'` ... `<div style={{ backgroundImage : 'url('+ bg +')'}}></div>`)
+- `import bg(작명) from './bg.png'` `<img src={bg}/>`
+
+3분할 이미지 사용시 bootstrap - grid
+
+html에서 public 폴더 이미지 사용할 땐 그냥 `/이미지경로`
+
+패키지의 public 폴더는 빌드시 압축을 하지 않고 그대로 유지된다.
+
+public 폴더에서 이미지 등 사용시 주의점: 경로에서 하위계층이 더 생길시 문제 발생(eg. nike.com/some/problem/occurs) -> some/problem/occurs/image.png 이런 식으로 하면 되는 경우도 있어)
+
+(이미지가 계속 추가되거나 바뀔 시 등에도 대처하기 위해?)  
+create react app 사이트 가이드: `<img src={process.env.PUBLIC_URL + '/img/logo.png'}>` 이런 식으로 쓰길 권장.
+
 
 
 

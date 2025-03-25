@@ -1,6 +1,7 @@
-import {Button, Navbar, Container, Nav} from 'react-bootstrap';
+import {Button, Navbar, Container, Nav, Row, Col} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
+import bg from './redwing.jpeg'
 
 function App() {
   return (
@@ -16,8 +17,25 @@ function App() {
         </Container>
       </Navbar>
 
-      <div className="main-bg">
-      </div>
+      <div className="main-bg"></div>
+
+      <Row>
+        <Col>
+          <img src={bg}/>
+          <h4>KREAM</h4>
+          <p>KREAM is a platform for buying and selling products online.</p>
+        </Col>
+        <Col>
+          <img src={bg}/>
+          <h4>KREAM</h4>
+          <p>KREAM is a platform for buying and selling products online.</p>
+        </Col>
+        <Col>
+          <img src={bg}/>
+          <h4>KREAM</h4>
+          <p>KREAM is a platform for buying and selling products online.</p>
+        </Col>
+      </Row>
     </div>
   )
 }
