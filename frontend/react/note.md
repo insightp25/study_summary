@@ -63,6 +63,9 @@ props 전송은 부모 -> 자식만 가능. 자식끼리도 불가.
 
 # 2트
 
+# Part 1. 블로그 제작 & 기초 문법
+
+
 # 리액트React 설치와 개발환경 세팅
 
 npm create vite@latest
@@ -449,18 +452,29 @@ class Modal2 extends React.Component {
 ```  
 
 
+</br></br></br></br></br>
+
+# Part 2. 쇼핑몰 프로젝트
+
+`npm create vite@latest`
+
+`cd 프로젝트디렉토리명`
+
+`npm install`
+
+`npm run dev`
+
+react bootstrap 사이트 접속 -> 부트스트랩 설치 -> css 스크립트 삽입
+
+(정보)이름이 대문자로 시작하면 모두 컴포넌트
+
+
+
 </br></br></br>
 
-# 
+# 이미지 넣는 법 & public 폴더 이용하기
 
-
-
-
-
-</br></br></br>
-
-# 
-
+css파일에서 src 안의 이미지 넣을 땐 ./이미지경로
 
 
 
