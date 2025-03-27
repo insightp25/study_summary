@@ -496,7 +496,23 @@ create react app 사이트 가이드: `<img src={process.env.PUBLIC_URL + '/img/
 
 </br></br></br>
 
-# 
+# 코드 길어지면 import export 하면 됩니다
+
+다른 파일에 있던 변수 가져오려면
+
+export하려면 export default 변수명 (default 없어도 되긴 함)
+
+import 하려면 import 작명 from '파일경로'
+
+export 여러 개 하려면 export {변수1, 변수2}
+
+import 여러 개 하려면 import {변수1, 변수2} from '경로' (->변수명 임의로 작명 불가)
+
+
+
+(참고)함수도 export 가능, 컴포넌트도 export 가능
+
+
 
 
 

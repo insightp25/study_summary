@@ -1,11 +1,15 @@
 import {Button, Navbar, Container, Nav, Row, Col} from 'react-bootstrap';
+import { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
-import bg from './redwing.jpeg'
+import data from './data.js';
 
 function App() {
+  let [shoes] = useState(data);
+
   return (
     <div className="App">
+
       <Navbar bg="dark" data-bs-theme="dark">
         <Container>
           <Navbar.Brand href="#home">KREAM</Navbar.Brand>
@@ -20,23 +24,25 @@ function App() {
       <div className="main-bg"></div>
 
       <Row>
-        <Col>
-          <img src={bg}/>
-          <h4>KREAM</h4>
-          <p>KREAM is a platform for buying and selling products online.</p>
-        </Col>
-        <Col>
-          <img src={bg}/>
-          <h4>KREAM</h4>
-          <p>KREAM is a platform for buying and selling products online.</p>
-        </Col>
-        <Col>
-          <img src={bg}/>
-          <h4>KREAM</h4>
-          <p>KREAM is a platform for buying and selling products online.</p>
-        </Col>
+        {
+          shoes.map((shoe, i) => {
+            return (
+              <Card shoe={shoe} i={i} />
+            )
+          })
+        }
       </Row>
     </div>
+  )
+}
+
+function Card(props) {
+  return (
+    <Col>
+      <img src={"./shoe" + props.i + ".jpeg"} />
+      <h4>{props.shoe.title}</h4>
+      <p>{props.shoe.price}</p>
+    </Col>
   )
 }
 
