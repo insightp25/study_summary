@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 import data from './data.js';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
-import DetailPage from './DetailPage.jsx';
+import Detail from './Detail.jsx';
 
 function App() {
   let [shoes] = useState(data);
@@ -16,7 +16,7 @@ function App() {
 
       <Navbar bg="dark" data-bs-theme="dark">
         <Container>
-          <Navbar.Brand href="#home">KREAM</Navbar.Brand>
+          <Navbar.Brand href="/">KREAM</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link onClick={() => navigate('/')}>Home</Nav.Link>
             <Nav.Link onClick={() => navigate('/detail')}>Detail</Nav.Link>
@@ -42,7 +42,7 @@ function App() {
           </div>
         }/>
 
-        <Route path="/detail" element={<div><DetailPage /></div>}/>
+        <Route path="/detail/:id" element={<Detail shoes={shoes} />}/>
         <Route path="/about" element={<About />}>
           <Route path="member" element={<div>멤버소개</div>} />
           <Route path="location" element={<div>찾아오는 길</div>} />
@@ -62,7 +62,7 @@ function App() {
 function Card(props) {
   return (
     <Col>
-      <img src={"./shoe" + props.i + ".jpeg"} />
+      <img src={"/shoe" + props.i + ".jpeg"} />
       <h4>{props.shoe.title}</h4>
       <p>{props.shoe.price}</p>
     </Col>

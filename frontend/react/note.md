@@ -634,9 +634,144 @@ Route의 장점
 
 </br></br></br>
 
+# 리액트 라우터 3 : URL 파라미터로 상세페이지 100개 만들기
+
+페이지 여러개 만들고 싶으면 `:URL파라미터` 써도 된다.
+
+```jsx
+function App() {
+  // ...
+  return (
+    <Route path="/detail/:id" element={<Detail shoes={shoes} />}
+  )
+}
+```
+```jsx
+import { useParams } from "react-router-dom";
+
+function Detail() {
+  let {id} = useParams();
+
+  return (
+    <p>{props.shoes[id].title}</p>
+    // ...
+  );
+}
+```
+- `/detail/:id` - `/detail/아무거나`라는 뜻
+
+유저가 url파라미터에 입력한거 가져오려면 `useParams()`
+
+(참고)url 파라미터 만들 때 여러 개 가능
+- eg. `<Route path="/detail/:id/:twefwe/:ewfewf" element={<Detail shoes={shoes} />}`
+
+
+
+</br></br></br>
+
 # 
 
 
+```jsx
+```
+
+
+
+</br></br></br>
+
+# 
+
+
+```jsx
+```
+
+
+</br></br></br>
+
+# 
+
+
+```jsx
+```
+
+
+
+</br></br></br>
+
+# 
+
+
+```jsx
+```
+
+
+
+</br></br></br>
+
+# 
+
+
+```jsx
+```
+
+
+
+</br></br></br>
+
+# 
+
+
+```jsx
+```
+
+
+
+</br></br></br>
+
+# 
+
+
+```jsx
+```
+
+
+</br></br></br>
+
+# 
+
+
+```jsx
+```
+
+
+
+</br></br></br>
+
+# 
+
+
+```jsx
+```
+
+
+
+</br></br></br>
+
+# 
+
+
+```jsx
+```
+
+
+
+</br></br></br>
+
+# 
+
+
+```jsx
+```
 
 
 
@@ -647,163 +782,10 @@ Route의 장점
 
 
 
-
 </br></br></br>
 
 # 
 
 
-
-
-</br></br></br>
-
-# 
-
-
-
-
-
-</br></br></br>
-
-# 
-
-
-
-
-
-</br></br></br>
-
-# 
-
-
-
-
-
-</br></br></br>
-
-# 
-
-
-
-
-
-</br></br></br>
-
-# 
-
-
-
-
-</br></br></br>
-
-# 
-
-
-
-
-
-</br></br></br>
-
-# 
-
-
-
-
-
-</br></br></br>
-
-# 
-
-
-
-
-
-</br></br></br>
-
-# 
-
-
-
-
-
-</br></br></br>
-
-# 
-
-
-
-
-</br></br></br>
-
-# 
-
-
-
-
-
-</br>
-
-### 
-
-
-
-
-
-</br>
-
-### 
-
-
-
-
-
-</br>
-
-### 
-
-
-
-
-
-</br>
-
-### 
-
-
-
-
-</br>
-
-### 
-
-
-
-
-
-</br>
-
-### 
-
-
-
-
-
-</br>
-
-### 
-
-
-
-
-
-</br>
-
-### 
-
-
-
-
-
-</br>
-
-### 
+```jsx
+```
