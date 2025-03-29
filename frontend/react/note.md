@@ -669,11 +669,66 @@ function Detail() {
 
 </br></br></br>
 
-# 
+# styled-components 쓰면 CSS 파일 없어도 되는데
 
+터미널에
+
+`npm install styled-components`
+
+
+styled-components 장점
+1. CSS 파일 안 열어도 된다.
+2. 스타일이 다른 js파일로 오염되지 않음
+  - (정보)css 사용시 오염 전파를 방지하려면 파일명 컴포넌트명.module.css로 작명
+3. 페이지 로딩시간 단축
 
 ```jsx
+function Detail() {
+  let DetailBtn = styled.button`
+    border: 0px;
+    background: ${props => props.bg};
+    color : ${props => props.bg == "lightblue" ? "black" : "white"};
+    border-radius: 10px;
+    padding: 10px;
+  `;
+  // let NewBtn = styled.Button(DetailBtn);
+  // styled.Button(DetailBtn)`
+  //   ...
+  // `; //(참고2)
+  let DetailBox = styled.div`
+    border: 1px white;
+    background-color: darkgray;
+    border-radius: 10px;
+    padding: 10px;
+  `;
+
+  return (
+    //...
+    <DetailBox>
+      <DetailBtn bg="lightblue">버튼</DetailBtn>
+      <DetailBtn bg="gray">버튼</DetailBtn>
+    </DetailBox>
+    //...
+  )
+}
 ```
+
+- `background: ${props => props.bg};` 는 무슨 문법? -> 외부 라이브러리 사용법이라 이해보다는 그냥 복붙
+
+(참고1)당연히 간단한 프로그래밍 가능
+- `color : ${props => props.bg == "lightblue" ? "black" : "white"};`
+
+(참고2)기존 스타일 복사 가능
+
+
+단점1. js파일 매우 복잡해짐
+
+단점2. 중복스타일은 컴포넌트간 import할 텐데 그럴 경우 css와 다를 바가 없어진다.
+
+단점3. 협업시 css 담당의 숙련도 이슈(css만 숙련된 사람은 라이브러리 문법이 생소)
+
+
+
 
 
 
