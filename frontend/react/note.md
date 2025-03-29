@@ -563,7 +563,70 @@ import 여러 개 하려면 import {변수1, 변수2} from '경로' (->변수명
 
 </br></br></br>
 
-# 
+# 리액트 라우터 2 : navigate, nested routes, outlet
+
+
+1. 페이지 이동 도와주는 `useNavigate()`
+- 안에 함수가 들어있기 때문에 `let navigate = useNavigate();`의 식으로 변수로 담아 많이 쓴다.
+  ```jsx
+  <Nav.Link onClick={() => navigate('/')}>Home</Nav.Link>
+  <Nav.Link onClick={() => navigate('/detail')}>Detail</Nav.Link>
+  <Nav.Link onClick={() => navigate(1)}>앞으로</Nav.Link>
+  <Nav.Link onClick={() => navigate(-1)}>뒤로</Nav.Link> // -2 적으면 2번 뒤로..
+  ```
+
+2. 404 페이지 만들기
+
+```jsx
+<Routes>
+  <Route path="/" element={<div>
+    // ...
+  </div>}/>
+
+  <Route path="/detail" element={<div>
+    // ...
+  </div>}/>
+  <Route path="*" element={<div>404 NOT FOUND</div>}/>
+</Routes>
+```
+
+3. Nested Routes
+- `/about/member` 접속시 `<About/>`와 그 하위 내용(eg. `<div>멤버소개</div>`) 둘 다 보인다.
+- 상위 엘레멘트(`<About/>`) 어디에 보여줄지를 작성해야 하위 엘레멘트 내용도 표시가 된다.
+  - nested routes의 element 보여주는 곳은/어디에 보여줄지 정하려면 (상위 엘레멘트 본문에) `<Outlet`
+
+```jsx
+function App() {
+  return (
+    // ..
+    <Route path="/about" element={<About />}>
+      <Route path="member" element={<div>멤버소개..</div>} />
+      <Route path="location" element={<div>찾아오는 길..</div>} />
+    </Route>
+    //..
+  )
+}
+
+function About() {
+  return (
+    <div>
+      <h4>회사소개</h4>
+      <p>주소 : 서울시 강남구 테헤란로 77길 77 남도빌딩 3층</p>
+      <p>전화번호 : 02-777-1234</p>
+      <p>이메일 : kream@kream.com</p>
+      <Outlet></Outlet>
+    </div>
+  )
+}
+```
+
+Q. nested routes 언제 씀?
+- 여러 유사한 페이지 필요할 때(페이지 이동후 바뀌는 게 거의 없을 때 등)
+- 모달창, 탭 기능 등
+
+Route의 장점
+1. 이런 식으로 UI 만들면 뒤로가기 버튼 이용 가능. ((왠지)뒤로가기 버튼이 잘 먹는다)
+2. 페이지 이동이 쉬움(UI 스위치 조작 쉬움) 
 
 
 
