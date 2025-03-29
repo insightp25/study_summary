@@ -59,6 +59,22 @@ props 전송은 부모 -> 자식만 가능. 자식끼리도 불가.
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </br></br></br></br></br>
 
 # 2트
@@ -519,7 +535,27 @@ import 여러 개 하려면 import {변수1, 변수2} from '경로' (->변수명
 
 </br></br></br>
 
-# 
+# 리액트 라우터 1 : 셋팅이랑 기본 라우팅
+
+(정보) import 시
+- 내가 만든 파일들은 `./`부터
+- `react-router-dom` 이런 건 대부분 설치한 라이브러리
+
+(외부 라이브러리는 외워서 쓰는 게 아니라 필요할 때 검색해서 쓰는 것이다)
+
+```jsx
+<Routes>
+  <Route path="/" element={<div>메인페이지입니다.</div>}/>
+  <Route path="/detail" element={<div>상세페이지입니다.</div>}/>
+</Routes>
+```
+
+페이지 이동은 `<Link>`
+
+`<Link to="/">홈</Link>`
+`<Link to="/detail">상세페이지</Link>`
+
+
 
 
 
