@@ -14,6 +14,9 @@ function Detail(props) {
     padding: 10px;
   `;
   // let NewBtn = styled.Button(DetailBtn);
+  // styled.Button(DetailBtn)`
+  //   ...
+  // `; //(참고2)
   let DetailBox = styled.div`
     border: 1px white;
     background-color: darkgray;
