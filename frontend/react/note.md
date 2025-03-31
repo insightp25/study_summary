@@ -537,6 +537,8 @@ import 여러 개 하려면 import {변수1, 변수2} from '경로' (->변수명
 
 # 리액트 라우터 1 : 셋팅이랑 기본 라우팅
 
+`npm install react-router-dom@latest`
+
 (정보) import 시
 - 내가 만든 파일들은 `./`부터
 - `react-router-dom` 이런 건 대부분 설치한 라이브러리
