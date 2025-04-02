@@ -736,11 +736,47 @@ function Detail() {
 
 </br></br></br>
 
-# 
+# Lifecycle과 useEffect 1
+
+컴포넌트의 lifecycle
+- 페이지에 장착되기도 하고(mount)
+- 가끔 업데이트도 되고(update)
+- 필요없으면 제거되고(unmount)
+
+왜 lifecycle을 알아야하는지가 중요. 알면 간섭을 할 수 있다. 컴포넌트가 장착이 되거나 업데이트가 될 때 간섭을 해줄 수 있다(간섭=코드 실행). 장착 될 때/업데이트 될 때/제거될 때 코드 실행 가능.
 
 
+mount, update시 코드 실행해주는 useEffect
+
+컴포넌트에 갈고리 다는 법
 ```jsx
+function Detail(props) {
+
+  useEffect(() => {
+    console.log('hi, this is a hook.')// mount, update 될때마다 실행됨
+    // 개발시엔 두 번 실행. 원래 그렇다. 디버깅을 위해. 배포시엔 한 번만 실행된다.
+    // 개발시에도 한 번만 출력 원할 시 index.js에서 <React.StrictMode> 없애거나 하면 된다.
+  })
+  //...
+}
 ```
+
+update란 = 재렌더링.
+
+useEffect 쓰는 이유
+- useEffect 안의 코드는 html 렌더링이 다 되고난 후 실행
+- useEffect 안에 적는 코드들은
+  - 어려운 연산
+  - 서버에서 데이터 가져오는 작업
+  - 타이머 장착하는 것
+
+Q. 이름이 ~effect 인 이유
+  - side effect: 함수의 핵심기능과 상관없는 부가기능
+
+
+
+
+
 
 
 </br></br></br>

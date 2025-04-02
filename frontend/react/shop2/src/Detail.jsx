@@ -1,7 +1,16 @@
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { useEffect, useState } from "react";
 
 function Detail(props) {
+
+  useEffect(() => {
+    console.log('hi, this is a hook.')// mount, update 될때마다 실행됨
+
+  })
+  console.log('hi, this is a hook.2');
+
+  let [count, setCount] = useState(0);
 
   let {id} = useParams();
   let foundShoe = props.shoes.find(shoe => shoe.id === Number(id));
@@ -26,6 +35,8 @@ function Detail(props) {
 
   return (
     <div className="container">
+      { count }
+      <button onClick={() => {setCount(count + 1)}}>증가</button>
       <DetailBox>
         <DetailBtn bg="lightblue">버튼</DetailBtn>
         <DetailBtn bg="gray">버튼</DetailBtn>
